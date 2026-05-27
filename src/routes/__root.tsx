@@ -72,14 +72,18 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Lovable App" },
-      { name: "description", content: "Lovable Generated Project" },
+      { title: "Conversoo Automações" },
+      { name: "description", content: "Plataformas, automações e agentes de IA para o seu negócio." },
       { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Lovable App" },
-      { property: "og:description", content: "Lovable Generated Project" },
+      { property: "og:title", content: "Conversoo Automações" },
+      { property: "og:description", content: "Plataformas, automações e agentes de IA para o seu negócio." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
       { name: "twitter:site", content: "@Lovable" },
+      { name: "twitter:title", content: "Conversoo Automações" },
+      { name: "twitter:description", content: "Plataformas, automações e agentes de IA para o seu negócio." },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/197e2850-8991-4ef0-a52b-c7d876296161/id-preview-4a0a3b69--d848e6fb-b9ae-4c77-8aa2-1d371519d20e.lovable.app-1779882703673.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/197e2850-8991-4ef0-a52b-c7d876296161/id-preview-4a0a3b69--d848e6fb-b9ae-4c77-8aa2-1d371519d20e.lovable.app-1779882703673.png" },
     ],
     links: [
       {

@@ -420,7 +420,7 @@ function Index() {
           className="fade-up"
           style={{
             display: "grid",
-            gridTemplateColumns: "1fr 1fr",
+            gridTemplateColumns: "1fr",
             gap: "0.7rem",
           }}
         >
@@ -442,6 +442,21 @@ function Index() {
                 <line x1="16" y1="18" x2="16" y2="22" stroke="#818cf8" strokeWidth="1" opacity="0.4" />
                 <line x1="10" y1="16" x2="14" y2="16" stroke="#818cf8" strokeWidth="1" opacity="0.4" />
                 <line x1="18" y1="16" x2="22" y2="16" stroke="#818cf8" strokeWidth="1" opacity="0.4" />
+              </svg>
+            }
+          />
+          <GridCard
+            href="https://quintaloka.conversoo.cloud"
+            iconBg="linear-gradient(135deg,#1a0800,#2d1200)"
+            name="Quinta Loka"
+            desc="Organize jantas com amigos — sorteio, cardápio por IA e divisão de gastos automática"
+            badge={<Badge kind="LIVE" />}
+            svg={
+              <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+                <path d="M22 8 C18 8 14 10 14 15 C14 18 16 20 16 20 C16 20 10 22 8 26 L24 26 C22 24 18 22 18 22 C18 22 20 20 20 17" stroke="#F97316" strokeWidth="1.5" strokeLinecap="round" fill="none" />
+                <path d="M20 8 C24 10 26 14 24 18" stroke="#F97316" strokeWidth="1.5" strokeLinecap="round" fill="none" />
+                <circle cx="24" cy="9" r="2" fill="#A855F7" opacity="0.8" />
+                <circle cx="27" cy="14" r="1" fill="#F97316" opacity="0.5" />
               </svg>
             }
           />

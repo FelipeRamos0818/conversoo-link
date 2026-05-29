@@ -420,7 +420,7 @@ function Index() {
           className="fade-up"
           style={{
             display: "grid",
-            gridTemplateColumns: "1fr 1fr",
+            gridTemplateColumns: "1fr",
             gap: "0.7rem",
           }}
         >

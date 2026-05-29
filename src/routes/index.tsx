@@ -446,6 +446,21 @@ function Index() {
             }
           />
           <GridCard
+            href="https://quintaloka.conversoo.cloud"
+            iconBg="linear-gradient(135deg,#1a0800,#2d1200)"
+            name="Quinta Loka"
+            desc="Organize jantas com amigos — sorteio, cardápio por IA e divisão de gastos automática"
+            badge={<Badge kind="LIVE" />}
+            svg={
+              <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+                <path d="M22 8 C18 8 14 10 14 15 C14 18 16 20 16 20 C16 20 10 22 8 26 L24 26 C22 24 18 22 18 22 C18 22 20 20 20 17" stroke="#F97316" strokeWidth="1.5" strokeLinecap="round" fill="none" />
+                <path d="M20 8 C24 10 26 14 24 18" stroke="#F97316" strokeWidth="1.5" strokeLinecap="round" fill="none" />
+                <circle cx="24" cy="9" r="2" fill="#A855F7" opacity="0.8" />
+                <circle cx="27" cy="14" r="1" fill="#F97316" opacity="0.5" />
+              </svg>
+            }
+          />
+          <GridCard
             href="https://glam-glow-gate.lovable.app"
             iconBg="linear-gradient(135deg,#4a1040,#7c1d6f)"
             name="Glowly"

@@ -420,7 +420,7 @@ function Index() {
           className="fade-up"
           style={{
             display: "grid",
-            gridTemplateColumns: "1fr",
+            gridTemplateColumns: "1fr 1fr",
             gap: "0.7rem",
           }}
         >
@@ -442,21 +442,6 @@ function Index() {
                 <line x1="16" y1="18" x2="16" y2="22" stroke="#818cf8" strokeWidth="1" opacity="0.4" />
                 <line x1="10" y1="16" x2="14" y2="16" stroke="#818cf8" strokeWidth="1" opacity="0.4" />
                 <line x1="18" y1="16" x2="22" y2="16" stroke="#818cf8" strokeWidth="1" opacity="0.4" />
-              </svg>
-            }
-          />
-          <GridCard
-            href="https://quintaloka.conversoo.cloud"
-            iconBg="linear-gradient(135deg,#1a0800,#2d1200)"
-            name="Quinta Loka"
-            desc="Organize jantas com amigos — sorteio, cardápio por IA e divisão de gastos automática"
-            badge={<Badge kind="LIVE" />}
-            svg={
-              <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-                <path d="M22 8 C18 8 14 10 14 15 C14 18 16 20 16 20 C16 20 10 22 8 26 L24 26 C22 24 18 22 18 22 C18 22 20 20 20 17" stroke="#F97316" strokeWidth="1.5" strokeLinecap="round" fill="none" />
-                <path d="M20 8 C24 10 26 14 24 18" stroke="#F97316" strokeWidth="1.5" strokeLinecap="round" fill="none" />
-                <circle cx="24" cy="9" r="2" fill="#A855F7" opacity="0.8" />
-                <circle cx="27" cy="14" r="1" fill="#F97316" opacity="0.5" />
               </svg>
             }
           />
@@ -491,6 +476,21 @@ function Index() {
             }
           />
           <GridCard
+            href="https://quintaloka.conversoo.cloud"
+            iconBg="linear-gradient(135deg,#1a0800,#2d1200)"
+            name="Quinta Loka"
+            desc="Organize jantas com amigos — sorteio, cardápio por IA e divisão de gastos automática"
+            badge={<Badge kind="LIVE" />}
+            svg={
+              <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+                <path d="M22 8 C18 8 14 10 14 15 C14 18 16 20 16 20 C16 20 10 22 8 26 L24 26 C22 24 18 22 18 22 C18 22 20 20 20 17" stroke="#F97316" strokeWidth="1.5" strokeLinecap="round" fill="none" />
+                <path d="M20 8 C24 10 26 14 24 18" stroke="#F97316" strokeWidth="1.5" strokeLinecap="round" fill="none" />
+                <circle cx="24" cy="9" r="2" fill="#A855F7" opacity="0.8" />
+                <circle cx="27" cy="14" r="1" fill="#F97316" opacity="0.5" />
+              </svg>
+            }
+          />
+          <GridCard
             href="https://catalogo.aromasamore.com.br"
             iconBg="linear-gradient(135deg,#4a1535,#7c1d55)"
             name="Amoré Catálogo"
@@ -506,21 +506,58 @@ function Index() {
               </svg>
             }
           />
-          <GridCard
-            href="https://hub.aromasamore.com.br"
-            iconBg="linear-gradient(135deg,#1c1917,#292524)"
-            name="Amoré Hub"
-            desc="Gestão interna de produção"
-            badge={<Badge kind="CASE" />}
-            svg={
-              <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-                <circle cx="16" cy="16" r="4.5" stroke="#fb923c" strokeWidth="1.5" fill="none" />
-                <circle cx="16" cy="16" r="1.8" fill="#fb923c" />
-                <path d="M16 7 L16 10M16 22 L16 25M7 16 L10 16M22 16 L25 16M9.5 9.5 L11.6 11.6M20.4 20.4 L22.5 22.5M22.5 9.5 L20.4 11.6M11.6 20.4 L9.5 22.5" stroke="#fb923c" strokeWidth="1.5" strokeLinecap="round" />
-              </svg>
-            }
-          />
         </div>
+
+        <a
+          href="https://hub.aromasamore.com.br"
+          target="_blank"
+          rel="noreferrer"
+          className="fade-up wide-card"
+          style={{
+            display: "flex",
+            gap: 14,
+            alignItems: "center",
+            padding: "1rem",
+            borderRadius: 18,
+            border: "1px solid rgba(251,146,60,0.18)",
+            background:
+              "linear-gradient(135deg,rgba(251,146,60,0.05),rgba(109,40,217,0.04))",
+            textDecoration: "none",
+            color: "inherit",
+            marginTop: "0.8rem",
+            transition: "all 0.25s ease",
+          }}
+        >
+          <div
+            style={{
+              width: 52,
+              height: 52,
+              borderRadius: 13,
+              background: "linear-gradient(135deg,#1c1917,#292524)",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              flexShrink: 0,
+            }}
+          >
+            <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+              <circle cx="16" cy="16" r="4.5" stroke="#fb923c" strokeWidth="1.5" fill="none" />
+              <circle cx="16" cy="16" r="1.8" fill="#fb923c" />
+              <path d="M16 7 L16 10M16 22 L16 25M7 16 L10 16M22 16 L25 16M9.5 9.5 L11.6 11.6M20.4 20.4 L22.5 22.5M22.5 9.5 L20.4 11.6M11.6 20.4 L9.5 22.5" stroke="#fb923c" strokeWidth="1.5" strokeLinecap="round" />
+            </svg>
+          </div>
+          <div style={{ flex: 1, minWidth: 0 }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 4 }}>
+              <span style={{ fontWeight: 600, fontSize: "0.95rem", color: "#e9e2ff" }}>
+                Amoré Hub
+              </span>
+              <Badge kind="CASE" />
+            </div>
+            <div style={{ fontSize: "0.78rem", color: "#7463a0", lineHeight: 1.4 }}>
+              Gestão interna de produção
+            </div>
+          </div>
+        </a>
 
         {/* AGENTES IA */}
         <SectionLabel>Agentes IA ativos</SectionLabel>

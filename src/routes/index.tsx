@@ -1,1067 +1,316 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useEffect, useRef } from "react";
 
 export const Route = createFileRoute("/")({
   component: Index,
-  head: () => ({
-    meta: [
-      { title: "Conversoo Automações" },
-      {
-        name: "description",
-        content:
-          "Plataformas, automações e agentes de IA. Tecnologia que trabalha enquanto você cresce.",
-      },
-    ],
-  }),
 });
 
-/* ---------- Background canvas ---------- */
-function StarfieldCanvas() {
-  const ref = useRef<HTMLCanvasElement>(null);
-
-  useEffect(() => {
-    const canvas = ref.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
-
-    let raf = 0;
-    let w = (canvas.width = window.innerWidth);
-    let h = (canvas.height = window.innerHeight);
-
-    const stars = Array.from({ length: 180 }, () => ({
-      x: Math.random() * w,
-      y: Math.random() * h,
-      r: Math.random() * 1.2 + 0.2,
-      base: Math.random() * 0.5 + 0.2,
-      speed: Math.random() * 0.002 + 0.0006,
-      phase: Math.random() * Math.PI * 2,
-    }));
-
-    const nebColors = [
-      "rgba(109,40,217,",
-      "rgba(236,72,153,",
-      "rgba(99,102,241,",
-      "rgba(109,40,217,",
-      "rgba(236,72,153,",
-    ];
-    const nebulas = Array.from({ length: 5 }, (_, i) => ({
-      x: Math.random() * w,
-      y: Math.random() * h,
-      r: 220 + Math.random() * 260,
-      color: nebColors[i],
-      a: 0.03 + Math.random() * 0.07,
-    }));
-
-    const onResize = () => {
-      w = canvas.width = window.innerWidth;
-      h = canvas.height = window.innerHeight;
-    };
-    window.addEventListener("resize", onResize);
-
-    const draw = (t: number) => {
-      ctx.clearRect(0, 0, w, h);
-      ctx.fillStyle = "#05050f";
-      ctx.fillRect(0, 0, w, h);
-
-      for (const n of nebulas) {
-        const grad = ctx.createRadialGradient(n.x, n.y, 0, n.x, n.y, n.r);
-        grad.addColorStop(0, n.color + n.a + ")");
-        grad.addColorStop(1, n.color + "0)");
-        ctx.fillStyle = grad;
-        ctx.beginPath();
-        ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
-        ctx.fill();
-      }
-
-      for (const s of stars) {
-        const a = s.base + Math.sin(t * s.speed + s.phase) * 0.4;
-        ctx.globalAlpha = Math.max(0.05, Math.min(1, a));
-        ctx.fillStyle = "#dcd6ff";
-        ctx.beginPath();
-        ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
-        ctx.fill();
-      }
-      ctx.globalAlpha = 1;
-      raf = requestAnimationFrame(draw);
-    };
-    raf = requestAnimationFrame(draw);
-
-    return () => {
-      cancelAnimationFrame(raf);
-      window.removeEventListener("resize", onResize);
-    };
-  }, []);
-
-  return (
-    <canvas
-      ref={ref}
-      style={{
-        position: "fixed",
-        inset: 0,
-        width: "100vw",
-        height: "100vh",
-        zIndex: 0,
-        background: "#05050f",
-      }}
-    />
-  );
-}
-
-/* ---------- Helpers ---------- */
-const FONT_BODY = "'Outfit', system-ui, sans-serif";
 const FONT_MONO = "'JetBrains Mono', ui-monospace, monospace";
+const FONT_BODY = "'Outfit', system-ui, sans-serif";
 
-function SectionLabel({ children }: { children: React.ReactNode }) {
-  return (
-    <div
-      style={{
-        display: "flex",
-        alignItems: "center",
-        gap: 12,
-        margin: "2rem 0 1rem",
-      }}
-    >
-      <span
-        style={{
-          fontFamily: FONT_MONO,
-          fontSize: "0.63rem",
-          letterSpacing: 3,
-          textTransform: "uppercase",
-          color: "#5b4a8a",
-        }}
-      >
-        {children}
-      </span>
-      <span
-        style={{
-          flex: 1,
-          height: 1,
-          background:
-            "linear-gradient(90deg, rgba(109,40,217,0.35), transparent)",
-        }}
-      />
-    </div>
-  );
-}
+const WPP = "https://wa.me/5551992604341";
+const INSTA = "https://instagram.com/conversoo.automacoes";
 
-function Badge({
-  kind,
-  children,
-}: {
-  kind: "LIVE" | "BETA" | "CASE";
-  children?: React.ReactNode;
-}) {
-  const styles: Record<string, React.CSSProperties> = {
-    LIVE: {
-      background: "rgba(16,185,129,0.1)",
-      color: "#6ee7b7",
-      border: "1px solid rgba(16,185,129,0.2)",
-    },
-    BETA: {
-      background: "rgba(245,158,11,0.1)",
-      color: "#fcd34d",
-      border: "1px solid rgba(245,158,11,0.2)",
-    },
-    CASE: {
-      background: "rgba(109,40,217,0.12)",
-      color: "#c4b5fd",
-      border: "1px solid rgba(109,40,217,0.2)",
-    },
-  };
-  return (
-    <span
-      style={{
-        ...styles[kind],
-        fontFamily: FONT_MONO,
-        fontSize: "0.6rem",
-        borderRadius: 6,
-        padding: "3px 7px",
-        display: "inline-flex",
-        alignItems: "center",
-        gap: 5,
-        letterSpacing: 1,
-      }}
-    >
-      {kind === "LIVE" && (
-        <span
-          style={{
-            width: 6,
-            height: 6,
-            borderRadius: "50%",
-            background: "#10b981",
-            animation: "blink 1.5s infinite",
-          }}
-        />
-      )}
-      {children || kind}
-    </span>
-  );
-}
-
-/* ---------- Page ---------- */
 function Index() {
   return (
     <>
       <style>{css}</style>
-      <StarfieldCanvas />
-      <main
-        style={{
-          position: "relative",
-          zIndex: 2,
-          maxWidth: 500,
-          margin: "0 auto",
-          padding: "2.5rem 1.1rem 2rem",
-          fontFamily: FONT_BODY,
-          color: "#e9e2ff",
-        }}
-      >
+
+      <div className="aurora-wrap">
+        <div className="aurora a1" />
+        <div className="aurora a2" />
+        <div className="aurora a3" />
+        <div className="aurora a4" />
+        <div className="aurora a5" />
+      </div>
+      <div className="grade" />
+      <div className="veu" />
+      <div className="scan" />
+
+      <main className="cv-main">
         {/* HERO */}
-        <section className="fade-up" style={{ textAlign: "center" }}>
-          <div
-            style={{
-              position: "relative",
-              width: 88,
-              height: 88,
-              margin: "0 auto 1.1rem",
-            }}
-          >
-            <div
-              style={{
-                position: "absolute",
-                inset: -10,
-                borderRadius: "50%",
-                background:
-                  "radial-gradient(circle, rgba(109,40,217,0.35), transparent 70%)",
-                animation: "glowPulse 3s ease-in-out infinite",
-              }}
-            />
-            <div
-              className="conic-border"
-              style={{
-                position: "absolute",
-                inset: 0,
-                borderRadius: "50%",
-                padding: 2,
-              }}
-            >
-              <div
-                style={{
-                  width: "100%",
-                  height: "100%",
-                  borderRadius: "50%",
-                  background: "#05050f",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}
-              >
-                <div
-                  style={{
-                    width: 58,
-                    height: 58,
-                    borderRadius: "50%",
-                    background:
-                      "radial-gradient(circle at 30% 30%, #6D28D9, #4c1d95 60%, #EC4899)",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    fontFamily: FONT_MONO,
-                    fontSize: 22,
-                    color: "#c4b5fd",
-                    fontWeight: 500,
-                  }}
-                >
-                  C
-                </div>
-              </div>
-            </div>
+        <section className="hero">
+          <div className="orb-stage">
+            <svg viewBox="0 0 150 150" fill="none">
+              <defs>
+                <radialGradient id="coreG" cx="40%" cy="35%" r="70%">
+                  <stop offset="0%" stopColor="#c4b5fd" />
+                  <stop offset="45%" stopColor="#7c3aed" />
+                  <stop offset="100%" stopColor="#db2777" />
+                </radialGradient>
+                <radialGradient id="haloG" cx="50%" cy="50%" r="50%">
+                  <stop offset="0%" stopColor="rgba(124,58,237,.5)" />
+                  <stop offset="100%" stopColor="rgba(124,58,237,0)" />
+                </radialGradient>
+                <linearGradient id="ringG" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0%" stopColor="#a78bfa" />
+                  <stop offset="100%" stopColor="#f0abfc" />
+                </linearGradient>
+              </defs>
+              <circle cx="75" cy="75" r="70" fill="url(#haloG)" />
+              <g className="ring-a">
+                <ellipse cx="75" cy="75" rx="58" ry="58" stroke="url(#ringG)" strokeWidth="1" opacity=".35" />
+                <circle className="orbit-1" cx="133" cy="75" r="2.4" fill="#f0abfc" />
+              </g>
+              <g className="ring-b">
+                <ellipse cx="75" cy="75" rx="48" ry="60" stroke="#a78bfa" strokeWidth="1" opacity=".4" transform="rotate(35 75 75)" />
+                <circle className="orbit-2" cx="75" cy="15" r="2" fill="#c4b5fd" />
+              </g>
+              <g className="ring-c">
+                <ellipse cx="75" cy="75" rx="62" ry="44" stroke="#ec4899" strokeWidth="1" opacity=".3" transform="rotate(-25 75 75)" />
+                <circle className="orbit-3" cx="137" cy="75" r="1.8" fill="#f9a8d4" />
+              </g>
+              <g className="core-glow">
+                <circle cx="75" cy="75" r="30" fill="url(#coreG)" />
+                <circle cx="75" cy="75" r="30" fill="none" stroke="rgba(255,255,255,.25)" strokeWidth="1" />
+                <ellipse cx="66" cy="64" rx="10" ry="7" fill="rgba(255,255,255,.3)" />
+              </g>
+              <g className="eye-scan">
+                <rect x="60" y="72" width="30" height="3" rx="1.5" fill="rgba(255,255,255,.85)" />
+                <rect x="66" y="78" width="18" height="2" rx="1" fill="rgba(255,255,255,.5)" />
+              </g>
+            </svg>
           </div>
-
-          <div
-            style={{
-              fontFamily: FONT_MONO,
-              fontSize: "0.65rem",
-              color: "#6D28D9",
-              letterSpacing: 3,
-              textTransform: "lowercase",
-            }}
-          >
-            conversoo.automações
-          </div>
-          <h1
-            style={{
-              fontFamily: FONT_BODY,
-              fontWeight: 800,
-              fontSize: "1.5rem",
-              margin: "0.5rem 0 0.4rem",
-              background:
-                "linear-gradient(90deg,#f0e8ff,#c4b5fd,#f9a8d4)",
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
-              backgroundClip: "text",
-            }}
-          >
-            Conversoo Automações
-          </h1>
-          <p
-            style={{
-              fontFamily: FONT_BODY,
-              fontWeight: 300,
-              fontSize: "0.83rem",
-              color: "#6b5c88",
-              margin: 0,
-            }}
-          >
-            Tecnologia que trabalha enquanto você cresce.
-          </p>
-
-          <div
-            style={{
-              display: "flex",
-              gap: 8,
-              justifyContent: "center",
-              marginTop: "1.1rem",
-              flexWrap: "wrap",
-            }}
-          >
-            <Pill href="https://instagram.com/conversoo.automacoes">
+          <div className="kicker">conversoo.automações</div>
+          <h1 className="cv-h1">Conversoo Automações</h1>
+          <div className="sub">Tecnologia que trabalha enquanto você cresce.</div>
+          <div className="pills">
+            <a className="pill" href={INSTA} target="_blank" rel="noreferrer">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="3" y="3" width="18" height="18" rx="5" /><circle cx="12" cy="12" r="4" /><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none" /></svg>
               Instagram
-            </Pill>
-            <Pill href="https://wa.me/5551992604341">+55 51 99260-4341</Pill>
+            </a>
+            <a className="pill" href={WPP} target="_blank" rel="noreferrer">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.52 3.48A11.85 11.85 0 0 0 12.05 0C5.5 0 .17 5.33.17 11.88c0 2.09.55 4.13 1.6 5.93L0 24l6.34-1.66a11.86 11.86 0 0 0 5.7 1.45c6.55 0 11.88-5.33 11.88-11.88 0-3.17-1.23-6.15-3.41-8.43z" /></svg>
+              WhatsApp
+            </a>
           </div>
         </section>
 
         {/* COPY */}
-        <section
-          className="fade-up"
-          style={{
-            margin: "2.2rem auto 0",
-            maxWidth: 380,
-            padding: "0 1rem",
-            borderLeft: "2px solid rgba(109,40,217,0.3)",
-            borderRadius: 0,
-          }}
-        >
-          <p
-            style={{
-              fontFamily: FONT_BODY,
-              fontWeight: 400,
-              fontSize: "0.88rem",
-              color: "#7463a0",
-              lineHeight: 1.7,
-              textAlign: "center",
-              margin: 0,
-            }}
-          >
-            Tudo que você ver aqui, a gente construiu. Plataformas, automações
-            e agentes de IA. Se você tem um problema no seu negócio, a gente
-            provavelmente já sabe como resolver — fala com a gente.
-          </p>
-        </section>
+        <p className="copy rise">
+          Tudo que você vê aqui, <b>a gente construiu</b>. Plataformas, automações e agentes de IA. Se você tem um problema no seu negócio, a gente provavelmente já sabe como resolver.
+        </p>
 
         {/* PLATAFORMAS */}
-        <SectionLabel>Plataformas</SectionLabel>
+        <div className="rise">
+          <div className="seclabel"><span className="br" /><span>Plataformas</span><div className="line" /></div>
 
-        <a
-          href="https://bolao.conversoo.cloud/"
-          target="_blank"
-          rel="noreferrer"
-          className="fade-up wide-card"
-          style={{
-            display: "flex",
-            gap: 14,
-            alignItems: "center",
-            padding: "1rem",
-            borderRadius: 18,
-            border: "1px solid rgba(16,185,129,0.2)",
-            background:
-              "linear-gradient(135deg,rgba(16,185,129,0.05),rgba(109,40,217,0.04))",
-            textDecoration: "none",
-            color: "inherit",
-            marginBottom: "0.8rem",
-            transition: "all 0.25s ease",
-          }}
-        >
-          <div
-            style={{
-              width: 52,
-              height: 52,
-              borderRadius: 13,
-              background: "linear-gradient(135deg,#064e3b,#065f46)",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              flexShrink: 0,
-            }}
-          >
-            <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-              <circle cx="16" cy="13" r="8" stroke="#6ee7b7" strokeWidth="1.5" fill="none" />
-              <path d="M16 5 L18 10 L23 10 L19 13.5 L20.5 19 L16 16 L11.5 19 L13 13.5 L9 10 L14 10 Z" fill="#6ee7b7" opacity="0.9" />
-              <rect x="10" y="22" width="12" height="2" rx="1" fill="#6ee7b7" opacity="0.5" />
-              <rect x="13" y="24" width="6" height="1.5" rx="0.75" fill="#6ee7b7" opacity="0.4" />
-            </svg>
+          <a className="destaque" href="https://bolao.conversoo.cloud" target="_blank" rel="noreferrer">
+            <div className="ic"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#6ee7b7" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><path d="M6 9a6 6 0 0 0 12 0V4H6z" /><path d="M6 5H4a2 2 0 0 0 0 4h2M18 5h2a2 2 0 0 1 0 4h-2" /><path d="M12 15v3M9 21h6" /></svg></div>
+            <div className="tx"><h3>Bolão da Copa 2026 <span className="badge b-live"><span className="dot" />LIVE</span></h3><p>Palpites, ranking e pontuação automática com seus amigos</p></div>
+          </a>
+
+          <div className="grid">
+            <a className="gcard glass" href="https://querapostar.conversoo.cloud" target="_blank" rel="noreferrer">
+              <div className="ic" style={{ background: "linear-gradient(135deg,#1e1b4b,#312e81)" }}><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#a5b4fc" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="9" /><circle cx="12" cy="12" r="4" /><path d="M12 3v3M12 18v3M3 12h3M18 12h3" /></svg></div>
+              <h4>Quer Apostar?</h4><div className="desc">Apostas personalizadas entre amigos em qualquer tema</div>
+              <span className="badge b-live"><span className="dot" />LIVE</span>
+            </a>
+            <a className="gcard glass" href="https://glam-glow-gate.lovable.app" target="_blank" rel="noreferrer">
+              <div className="ic" style={{ background: "linear-gradient(135deg,#4a1040,#7c1d6f)" }}><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#f0abfc" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2l2.2 4.5L19 7l-3.5 3.4.8 4.8L12 13l-4.3 2.2.8-4.8L5 7l4.8-.5z" fill="rgba(240,171,252,.12)" /><path d="M12 13v9" /></svg></div>
+              <h4>Glowly</h4><div className="desc">Agendamento para salões e estéticas com IA</div>
+              <span className="badge b-beta">BETA</span>
+            </a>
+            <a className="gcard glass" href="https://quintaloka.conversoo.cloud" target="_blank" rel="noreferrer">
+              <div className="ic" style={{ background: "linear-gradient(135deg,#2d1200,#451a03)" }}><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fb923c" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><path d="M8 21h8M12 17v4M7 4h10l-1 7a4 4 0 0 1-8 0z" /><path d="M5 4h14" /><circle cx="18" cy="6" r="1.3" fill="#a855f7" stroke="none" /></svg></div>
+              <h4>Quinta Loka</h4><div className="desc">Jantas com amigos: sorteio, cardápio por IA e divisão de gastos</div>
+              <span className="badge b-live"><span className="dot" />LIVE</span>
+            </a>
+            <a className="gcard glass" href="https://catalogo.aromasamore.com.br" target="_blank" rel="noreferrer">
+              <div className="ic" style={{ background: "linear-gradient(135deg,#4a1535,#7c1d55)" }}><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fda4af" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><path d="M12 3s-5 4-5 9a5 5 0 0 0 10 0c0-5-5-9-5-9z" fill="rgba(253,164,175,.12)" /><path d="M12 11c-1.5 1-1.5 3 0 4" /></svg></div>
+              <h4>Amoré Catálogo</h4><div className="desc">Catálogo digital + automação de vendas</div>
+              <span className="badge b-case">CASE</span>
+            </a>
           </div>
-          <div style={{ flex: 1, minWidth: 0 }}>
-            <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 4 }}>
-              <span style={{ fontWeight: 600, fontSize: "0.95rem", color: "#e9e2ff" }}>
-                Bolão da Copa 2026
-              </span>
-              <Badge kind="LIVE" />
-            </div>
-            <div style={{ fontSize: "0.78rem", color: "#7463a0", lineHeight: 1.4 }}>
-              Palpites, ranking e pontuação automática com seus amigos
-            </div>
-          </div>
-        </a>
 
-        {/* Grid 2x2 */}
-        <div
-          className="fade-up"
-          style={{
-            display: "grid",
-            gridTemplateColumns: "1fr 1fr",
-            gap: "0.7rem",
-          }}
-        >
-          <GridCard
-            href="https://querapostar.conversoo.cloud"
-            iconBg="linear-gradient(135deg,#1e1b4b,#312e81)"
-            name="Quer Apostar?"
-            desc="Apostas personalizadas entre amigos em qualquer tema"
-            badge={<Badge kind="LIVE" />}
-            svg={
-              <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-                <circle cx="16" cy="16" r="9" stroke="#818cf8" strokeWidth="1.5" fill="none" />
-                <circle cx="16" cy="16" r="2" fill="#818cf8" />
-                <circle cx="16" cy="9" r="1" fill="#818cf8" opacity="0.6" />
-                <circle cx="16" cy="23" r="1" fill="#818cf8" opacity="0.6" />
-                <circle cx="9" cy="16" r="1" fill="#818cf8" opacity="0.6" />
-                <circle cx="23" cy="16" r="1" fill="#818cf8" opacity="0.6" />
-                <line x1="16" y1="10" x2="16" y2="14" stroke="#818cf8" strokeWidth="1" opacity="0.4" />
-                <line x1="16" y1="18" x2="16" y2="22" stroke="#818cf8" strokeWidth="1" opacity="0.4" />
-                <line x1="10" y1="16" x2="14" y2="16" stroke="#818cf8" strokeWidth="1" opacity="0.4" />
-                <line x1="18" y1="16" x2="22" y2="16" stroke="#818cf8" strokeWidth="1" opacity="0.4" />
-              </svg>
-            }
-          />
-          <GridCard
-            href="https://glam-glow-gate.lovable.app"
-            iconBg="linear-gradient(135deg,#4a1040,#7c1d6f)"
-            name="Glowly"
-            desc="Agendamento para salões e estéticas com IA"
-            badge={<Badge kind="BETA" />}
-            svg={
-              <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-                <defs>
-                  <linearGradient id="glyA" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stopColor="#fae8ff" />
-                    <stop offset="100%" stopColor="#a855f7" />
-                  </linearGradient>
-                  <linearGradient id="glyB" x1="0" y1="0" x2="1" y2="0">
-                    <stop offset="0%" stopColor="#e879f9" stopOpacity="0.8" />
-                    <stop offset="100%" stopColor="#7e22ce" stopOpacity="0.6" />
-                  </linearGradient>
-                </defs>
-                <path d="M11 16 L23 16 L17 28 Z" fill="url(#glyB)" />
-                <path d="M17 28 L23 16 L17 20 Z" fill="url(#glyA)" opacity="0.7" />
-                <path d="M13 8 L19 8 L23 16 L11 16 Z" fill="#e879f9" opacity="0.5" />
-                <path d="M13 8 L19 8 L17 20 L11 16 Z" fill="#fae8ff" opacity="0.4" />
-                <path d="M19 8 L23 16 L17 20 Z" fill="#c084fc" opacity="0.6" />
-                <path d="M13 8 L19 8" stroke="white" strokeWidth="0.8" opacity="0.4" />
-                <path d="M11 16 L23 16" stroke="white" strokeWidth="0.8" opacity="0.2" />
-                <path d="M13 8 L19 8 L23 16 L17 28 L11 16 Z" stroke="#f0abfc" strokeWidth="1.2" fill="none" />
-                <circle cx="19" cy="11" r="1.5" fill="white" opacity="0.8" />
-              </svg>
-            }
-          />
-          <GridCard
-            href="https://quintaloka.conversoo.cloud"
-            iconBg="linear-gradient(135deg,#1a0800,#2d1200)"
-            name="Quinta Loka"
-            desc="Organize jantas com amigos — sorteio, cardápio por IA e divisão de gastos automática"
-            badge={<Badge kind="LIVE" />}
-            svg={
-              <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-                <path d="M22 8 C18 8 14 10 14 15 C14 18 16 20 16 20 C16 20 10 22 8 26 L24 26 C22 24 18 22 18 22 C18 22 20 20 20 17" stroke="#F97316" strokeWidth="1.5" strokeLinecap="round" fill="none" />
-                <path d="M20 8 C24 10 26 14 24 18" stroke="#F97316" strokeWidth="1.5" strokeLinecap="round" fill="none" />
-                <circle cx="24" cy="9" r="2" fill="#A855F7" opacity="0.8" />
-                <circle cx="27" cy="14" r="1" fill="#F97316" opacity="0.5" />
-              </svg>
-            }
-          />
-          <GridCard
-            href="https://catalogo.aromasamore.com.br"
-            iconBg="linear-gradient(135deg,#4a1535,#7c1d55)"
-            name="Amoré Catálogo"
-            desc="Catálogo digital + automação de vendas"
-            badge={<Badge kind="CASE" />}
-            svg={
-              <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-                <path d="M16 8 C16 8 10 11 10 16.5 C10 20 12.5 23 16 23 C19.5 23 22 20 22 16.5 C22 11 16 8 16 8Z" fill="#fda4af" opacity="0.2" />
-                <path d="M16 8 C16 8 10 11 10 16.5 C10 20 12.5 23 16 23 C19.5 23 22 20 22 16.5 C22 11 16 8 16 8Z" stroke="#fda4af" strokeWidth="1.5" fill="none" />
-                <path d="M16 12 C16 12 13 14 13 16.5 C13 18.4 14.3 20 16 20" stroke="#fda4af" strokeWidth="1" opacity="0.5" strokeLinecap="round" />
-                <circle cx="16" cy="16.5" r="1.5" fill="#fda4af" />
-                <path d="M13 25 L16 23 L19 25" stroke="#fda4af" strokeWidth="1" strokeLinecap="round" opacity="0.5" />
-              </svg>
-            }
-          />
-        </div>
-
-        <a
-          href="https://hub.aromasamore.com.br"
-          target="_blank"
-          rel="noreferrer"
-          className="fade-up wide-card"
-          style={{
-            display: "flex",
-            gap: 14,
-            alignItems: "center",
-            padding: "1rem",
-            borderRadius: 18,
-            border: "1px solid rgba(251,146,60,0.18)",
-            background:
-              "linear-gradient(135deg,rgba(251,146,60,0.05),rgba(109,40,217,0.04))",
-            textDecoration: "none",
-            color: "inherit",
-            marginTop: "0.8rem",
-            transition: "all 0.25s ease",
-          }}
-        >
-          <div
-            style={{
-              width: 52,
-              height: 52,
-              borderRadius: 13,
-              background: "linear-gradient(135deg,#1c1917,#292524)",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              flexShrink: 0,
-            }}
-          >
-            <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-              <circle cx="16" cy="16" r="4.5" stroke="#fb923c" strokeWidth="1.5" fill="none" />
-              <circle cx="16" cy="16" r="1.8" fill="#fb923c" />
-              <path d="M16 7 L16 10M16 22 L16 25M7 16 L10 16M22 16 L25 16M9.5 9.5 L11.6 11.6M20.4 20.4 L22.5 22.5M22.5 9.5 L20.4 11.6M11.6 20.4 L9.5 22.5" stroke="#fb923c" strokeWidth="1.5" strokeLinecap="round" />
-            </svg>
-          </div>
-          <div style={{ flex: 1, minWidth: 0 }}>
-            <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 4 }}>
-              <span style={{ fontWeight: 600, fontSize: "0.95rem", color: "#e9e2ff" }}>
-                Amoré Hub
-              </span>
-              <Badge kind="CASE" />
-            </div>
-            <div style={{ fontSize: "0.78rem", color: "#7463a0", lineHeight: 1.4 }}>
-              Gestão interna de produção
-            </div>
-          </div>
-        </a>
-
-        {/* AGENTES IA */}
-        <SectionLabel>Agentes IA ativos</SectionLabel>
-        <div style={{ display: "flex", flexDirection: "column", gap: "0.6rem" }}>
-          <AgentRow
-            href="https://conversoo-grow-page.lovable.app"
-            name="Lia"
-            role="Atendimento e diagnóstico comercial"
-            label="Conversoo"
-            dot="#10b981"
-            avatarBg="rgba(109,40,217,0.12)"
-            avatarBorder="rgba(109,40,217,0.2)"
-            svg={
-              <svg width="24" height="24" viewBox="0 0 32 32" fill="none">
-                <circle cx="16" cy="13" r="5.5" stroke="#c4b5fd" strokeWidth="1.5" fill="rgba(109,40,217,0.15)" />
-                <circle cx="13.5" cy="12.5" r="1" fill="#c4b5fd" />
-                <circle cx="18.5" cy="12.5" r="1" fill="#c4b5fd" />
-                <path d="M13.5 15.5 Q16 17.5 18.5 15.5" stroke="#c4b5fd" strokeWidth="1" strokeLinecap="round" fill="none" />
-                <path d="M10 20 Q16 24 22 20" stroke="#c4b5fd" strokeWidth="1.5" strokeLinecap="round" fill="none" opacity="0.5" />
-                <line x1="16" y1="7.5" x2="16" y2="6" stroke="#c4b5fd" strokeWidth="1.5" strokeLinecap="round" />
-                <line x1="13" y1="8.2" x2="12.2" y2="6.9" stroke="#c4b5fd" strokeWidth="1.5" strokeLinecap="round" />
-                <line x1="19" y1="8.2" x2="19.8" y2="6.9" stroke="#c4b5fd" strokeWidth="1.5" strokeLinecap="round" />
-              </svg>
-            }
-          />
-          <AgentRow
-            href="https://glam-glow-gate.lovable.app"
-            name="Luna"
-            role="Agendamento e atendimento"
-            label="Glowly"
-            dot="#f59e0b"
-            avatarBg="rgba(245,158,11,0.08)"
-            avatarBorder="rgba(245,158,11,0.15)"
-            svg={
-              <svg width="24" height="24" viewBox="0 0 32 32" fill="none">
-                <path d="M22 16 C22 21 18.4 25 14 25 C9.6 25 6 21.4 6 17 C6 12.6 9.6 9 14 9 C12 11.5 12 15 14 17.5 C16 20 19.5 20.5 22 16Z" fill="#f0abfc" opacity="0.8" />
-                <circle cx="20" cy="10" r="1" fill="#f0abfc" opacity="0.6" />
-                <circle cx="24" cy="13" r="0.7" fill="#f0abfc" opacity="0.4" />
-                <circle cx="22" cy="8" r="0.5" fill="#f0abfc" opacity="0.3" />
-              </svg>
-            }
-          />
-          <AgentRow
-            href="https://catalogo.aromasamore.com.br"
-            name="Pã"
-            role="Vendas e relacionamento — centenas de leads/semana"
-            label="Amoré"
-            dot="#10b981"
-            avatarBg="rgba(236,72,153,0.08)"
-            avatarBorder="rgba(236,72,153,0.15)"
-            svg={
-              <svg width="24" height="24" viewBox="0 0 32 32" fill="none">
-                <path d="M16 10 C16 10 19 12 19 15 C19 17.2 17.7 19 16 19 C14.3 19 13 17.2 13 15 C13 12 16 10 16 10Z" fill="#fda4af" opacity="0.9" />
-                <path d="M10 13 C10 13 12 14 12 16.5 C12 18 11 19.5 9.5 20" stroke="#fda4af" strokeWidth="1.2" strokeLinecap="round" fill="none" opacity="0.5" />
-                <path d="M22 13 C22 13 20 14 20 16.5 C20 18 21 19.5 22.5 20" stroke="#fda4af" strokeWidth="1.2" strokeLinecap="round" fill="none" opacity="0.5" />
-                <path d="M11 21 Q16 26 21 21" stroke="#fda4af" strokeWidth="1.5" strokeLinecap="round" fill="none" />
-              </svg>
-            }
-          />
-        </div>
-
-        {/* LANDING PAGES */}
-        <SectionLabel>Landing pages</SectionLabel>
-        <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
-          <LandingRow
-            href="https://conversoo-grow-page.lovable.app"
-            emoji="🚀"
-            name="Conversoo — Site Institucional"
-            tag="CONVERSOO"
-          />
-          <LandingRow
-            href="https://energizante.aromasamore.com.br"
-            emoji="⚡"
-            name="Amoré — Linha Energizante"
-            tag="AMORÉ"
-          />
-          <LandingRow
-            href="https://equilibrio.aromasamore.com.br"
-            emoji="🍃"
-            name="Amoré — Linha Equilíbrio"
-            tag="AMORÉ"
-          />
-        </div>
-
-        {/* WHATSAPP */}
-        <SectionLabel>Automação WhatsApp</SectionLabel>
-        <div
-          className="fade-up"
-          style={{
-            position: "relative",
-            overflow: "hidden",
-            borderRadius: 18,
-            padding: "1.5rem",
-            border: "1px solid rgba(109,40,217,0.25)",
-            background:
-              "linear-gradient(135deg,rgba(109,40,217,0.12),rgba(236,72,153,0.07))",
-          }}
-        >
-          <div
-            style={{
-              position: "absolute",
-              top: -40,
-              left: -40,
-              width: 160,
-              height: 160,
-              background:
-                "radial-gradient(circle, rgba(109,40,217,0.15), transparent 70%)",
-              pointerEvents: "none",
-            }}
-          />
-          <h3
-            style={{
-              margin: 0,
-              fontFamily: FONT_BODY,
-              fontWeight: 700,
-              fontSize: "1.05rem",
-              color: "#f0e8ff",
-            }}
-          >
-            Agente IA no WhatsApp 24h
-          </h3>
-          <p
-            style={{
-              fontFamily: FONT_BODY,
-              fontWeight: 400,
-              fontSize: "0.83rem",
-              color: "#9985c4",
-              lineHeight: 1.55,
-              margin: "0.6rem 0 1.1rem",
-            }}
-          >
-            Atendimento humanizado integrado ao WhatsApp do seu negócio.
-            Responde leads, agenda, confirma e reativa clientes — sem você
-            precisar estar online.
-          </p>
-          <a
-            href="https://wa.me/5551992604341"
-            target="_blank"
-            rel="noreferrer"
-            style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              gap: 8,
-              width: "100%",
-              padding: "0.85rem 1rem",
-              borderRadius: 11,
-              background: "linear-gradient(135deg,#6D28D9,#EC4899)",
-              color: "#fff",
-              fontFamily: FONT_BODY,
-              fontWeight: 600,
-              fontSize: "0.9rem",
-              textDecoration: "none",
-            }}
-          >
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="white">
-              <path d="M20.52 3.48A11.85 11.85 0 0 0 12.05 0C5.5 0 .17 5.33.17 11.88c0 2.09.55 4.13 1.6 5.93L0 24l6.34-1.66a11.86 11.86 0 0 0 5.7 1.45h.01c6.55 0 11.88-5.33 11.88-11.88 0-3.17-1.23-6.15-3.41-8.43zM12.05 21.5a9.6 9.6 0 0 1-4.9-1.34l-.35-.21-3.76.99 1-3.66-.23-.38a9.6 9.6 0 1 1 8.24 4.6zm5.45-7.18c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.66.15-.2.3-.76.97-.93 1.17-.17.2-.34.22-.63.07-.3-.15-1.25-.46-2.38-1.47-.88-.78-1.47-1.75-1.64-2.05-.17-.3-.02-.46.13-.6.13-.13.3-.34.45-.51.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.07-.15-.66-1.6-.91-2.18-.24-.57-.49-.49-.66-.5l-.56-.01a1.07 1.07 0 0 0-.78.37c-.27.3-1.02 1-1.02 2.44s1.05 2.84 1.2 3.04c.15.2 2.06 3.15 5 4.42.7.3 1.25.48 1.67.62.7.22 1.34.19 1.85.12.56-.08 1.76-.72 2.01-1.42.25-.7.25-1.3.17-1.42-.07-.12-.27-.2-.57-.34z" />
-            </svg>
-            Quero para meu negócio
+          <a className="destaque" href="https://hub.aromasamore.com.br" target="_blank" rel="noreferrer" style={{ marginTop: ".7rem", borderColor: "rgba(251,146,60,.28)", background: "linear-gradient(135deg,rgba(251,146,60,.1),rgba(124,58,237,.05))" }}>
+            <div className="ic" style={{ background: "linear-gradient(135deg,#1c1917,#292524)", borderColor: "rgba(251,146,60,.22)" }}><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#fb923c" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="3" /><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2" /></svg></div>
+            <div className="tx"><h3 style={{ color: "var(--texto)" }}>Amoré Hub <span className="badge b-case">CASE</span></h3><p>Gestão interna de produção</p></div>
           </a>
         </div>
 
-        {/* CONTATO */}
-        <SectionLabel>Contato</SectionLabel>
-        <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
-          <LandingRow
-            href="https://wa.me/5551992604341"
-            emoji="📱"
-            name="+55 51 99260-4341"
-            tag="WHATSAPP"
-          />
-          <LandingRow
-            href="https://instagram.com/conversoo.automacoes"
-            emoji="📷"
-            name="@conversoo.automacoes"
-            tag="INSTAGRAM"
-          />
+        {/* AGENTES */}
+        <div className="rise">
+          <div className="seclabel"><span className="br" /><span>Agentes IA ativos</span><div className="line" /></div>
+          <div className="agentes">
+            <a className="agente glass" href="https://conversoo-grow-page.lovable.app" target="_blank" rel="noreferrer">
+              <div className="av" style={{ background: "rgba(124,58,237,.16)", border: "1px solid rgba(124,58,237,.32)" }}><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#c4b5fd" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><rect x="5" y="8" width="14" height="11" rx="3" /><path d="M12 8V5M12 5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z" /><circle cx="9.5" cy="13" r="1" fill="#c4b5fd" stroke="none" /><circle cx="14.5" cy="13" r="1" fill="#c4b5fd" stroke="none" /></svg><span className="sd" style={{ background: "#10b981", boxShadow: "0 0 6px #10b981" }} /></div>
+              <div><div className="nm">Lia</div><div className="rl">Atendimento e diagnóstico comercial</div></div><span className="lb">CONVERSOO</span>
+            </a>
+            <a className="agente glass" href="https://glam-glow-gate.lovable.app" target="_blank" rel="noreferrer">
+              <div className="av" style={{ background: "rgba(245,158,11,.11)", border: "1px solid rgba(245,158,11,.24)" }}><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#f0abfc" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><path d="M20 14a8 8 0 1 1-9-11 6 6 0 0 0 9 11z" fill="rgba(240,171,252,.12)" /></svg><span className="sd" style={{ background: "#f59e0b", boxShadow: "0 0 6px #f59e0b" }} /></div>
+              <div><div className="nm">Luna</div><div className="rl">Agendamento e atendimento</div></div><span className="lb">GLOWLY</span>
+            </a>
+            <a className="agente glass" href="https://catalogo.aromasamore.com.br" target="_blank" rel="noreferrer">
+              <div className="av" style={{ background: "rgba(236,72,153,.11)", border: "1px solid rgba(236,72,153,.24)" }}><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fda4af" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><path d="M12 8s3 2 3 5a3 3 0 0 1-6 0c0-3 3-5 3-5z" fill="rgba(253,164,175,.15)" /><path d="M8 19c1.3 1.3 2.7 2 4 2s2.7-.7 4-2" /></svg><span className="sd" style={{ background: "#10b981", boxShadow: "0 0 6px #10b981" }} /></div>
+              <div><div className="nm">Pã</div><div className="rl">Vendas e relacionamento, centenas de leads/semana</div></div><span className="lb">AMORÉ</span>
+            </a>
+          </div>
         </div>
 
-        <footer
-          style={{
-            marginTop: "2.5rem",
-            textAlign: "center",
-            fontFamily: FONT_MONO,
-            fontSize: "0.6rem",
-            color: "#2e2548",
-            letterSpacing: 1.5,
-          }}
-        >
-          © 2026 CONVERSOO — ALL SYSTEMS OPERATIONAL
-        </footer>
+        {/* LANDING PAGES */}
+        <div className="rise">
+          <div className="seclabel"><span className="br" /><span>Landing pages</span><div className="line" /></div>
+          <div className="linhas">
+            <a className="linha glass" href="https://conversoo-grow-page.lovable.app" target="_blank" rel="noreferrer"><div className="em" style={{ background: "rgba(124,58,237,.13)", border: "1px solid rgba(124,58,237,.22)" }}><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#c4b5fd" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><path d="M5 19l3-3M14 6c4 0 4 4 4 4s-4 4-8 4l-2-2c0-4 4-6 6-6z" fill="rgba(196,181,253,.1)" /><circle cx="14.5" cy="9.5" r="1" /></svg></div><div className="nm">Conversoo — Site Institucional</div><span className="tg" style={{ background: "rgba(124,58,237,.1)", border: "1px solid rgba(124,58,237,.25)", color: "#c4b5fd" }}>CONVERSOO</span></a>
+            <a className="linha glass" href="https://energizante.aromasamore.com.br" target="_blank" rel="noreferrer"><div className="em" style={{ background: "rgba(236,72,153,.1)", border: "1px solid rgba(236,72,153,.22)" }}><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#f9a8d4" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><path d="M13 2L4 14h6l-1 8 9-12h-6z" fill="rgba(249,168,212,.15)" /></svg></div><div className="nm">Amoré — Linha Energizante</div><span className="tg" style={{ background: "rgba(236,72,153,.09)", border: "1px solid rgba(236,72,153,.22)", color: "#f9a8d4" }}>AMORÉ</span></a>
+            <a className="linha glass" href="https://equilibrio.aromasamore.com.br" target="_blank" rel="noreferrer"><div className="em" style={{ background: "rgba(16,185,129,.1)", border: "1px solid rgba(16,185,129,.22)" }}><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#6ee7b7" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><path d="M11 20A7 7 0 0 1 9 6c4-2 9-2 11-3 .5 4 0 11-4 14a7 7 0 0 1-5 3z" fill="rgba(110,231,183,.12)" /><path d="M11 20c0-4 2-8 5-10" /></svg></div><div className="nm">Amoré — Linha Equilíbrio</div><span className="tg" style={{ background: "rgba(16,185,129,.09)", border: "1px solid rgba(16,185,129,.22)", color: "#6ee7b7" }}>AMORÉ</span></a>
+          </div>
+        </div>
+
+        {/* CTA WHATSAPP */}
+        <div className="rise">
+          <div className="seclabel"><span className="br" /><span>Automação WhatsApp</span><div className="line" /></div>
+          <div className="cta">
+            <div className="cta-glow" />
+            <h3>Agente IA no WhatsApp 24h</h3>
+            <p>Atendimento humanizado integrado ao WhatsApp do seu negócio. Responde leads, agenda, confirma e reativa clientes, sem você precisar estar online.</p>
+            <a href={WPP} target="_blank" rel="noreferrer"><svg width="18" height="18" viewBox="0 0 24 24" fill="#fff"><path d="M20.52 3.48A11.85 11.85 0 0 0 12.05 0C5.5 0 .17 5.33.17 11.88c0 2.09.55 4.13 1.6 5.93L0 24l6.34-1.66a11.86 11.86 0 0 0 5.7 1.45h.01c6.55 0 11.88-5.33 11.88-11.88 0-3.17-1.23-6.15-3.41-8.43zM12.05 21.5a9.6 9.6 0 0 1-4.9-1.34l-.35-.21-3.76.99 1-3.66-.23-.38a9.6 9.6 0 1 1 8.24 4.6z" /></svg>Quero para meu negócio</a>
+          </div>
+        </div>
+
+        {/* CONTATO */}
+        <div className="rise">
+          <div className="seclabel"><span className="br" /><span>Contato</span><div className="line" /></div>
+          <div className="linhas">
+            <a className="linha glass" href={WPP} target="_blank" rel="noreferrer"><div className="em" style={{ background: "rgba(16,185,129,.1)", border: "1px solid rgba(16,185,129,.24)" }}><svg width="18" height="18" viewBox="0 0 24 24" fill="#6ee7b7"><path d="M20.52 3.48A11.85 11.85 0 0 0 12.05 0C5.5 0 .17 5.33.17 11.88c0 2.09.55 4.13 1.6 5.93L0 24l6.34-1.66a11.86 11.86 0 0 0 5.7 1.45h.01c6.55 0 11.88-5.33 11.88-11.88 0-3.17-1.23-6.15-3.41-8.43zM12.05 21.5a9.6 9.6 0 0 1-4.9-1.34l-.35-.21-3.76.99 1-3.66-.23-.38a9.6 9.6 0 1 1 8.24 4.6z" /></svg></div><div className="nm">Falar no WhatsApp</div><span className="tg" style={{ background: "rgba(16,185,129,.09)", border: "1px solid rgba(16,185,129,.24)", color: "#6ee7b7" }}>DIRETO</span></a>
+            <a className="linha glass" href={INSTA} target="_blank" rel="noreferrer"><div className="em" style={{ background: "rgba(236,72,153,.1)", border: "1px solid rgba(236,72,153,.24)" }}><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#f9a8d4" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="18" height="18" rx="5" /><circle cx="12" cy="12" r="4" /><circle cx="17.5" cy="6.5" r="1" fill="#f9a8d4" stroke="none" /></svg></div><div className="nm">@conversoo.automacoes</div><span className="tg" style={{ background: "rgba(236,72,153,.09)", border: "1px solid rgba(236,72,153,.24)", color: "#f9a8d4" }}>INSTAGRAM</span></a>
+          </div>
+        </div>
+
+        <footer className="cv-footer"><span className="blink-dot" />© 2026 CONVERSOO — ALL SYSTEMS OPERATIONAL · 51 99260-4341</footer>
       </main>
     </>
   );
 }
 
-/* ---------- Sub components ---------- */
-function Pill({ href, children }: { href: string; children: React.ReactNode }) {
-  return (
-    <a
-      href={href}
-      target="_blank"
-      rel="noreferrer"
-      style={{
-        borderRadius: 100,
-        border: "1px solid rgba(109,40,217,0.3)",
-        background: "rgba(109,40,217,0.07)",
-        color: "#a78bfa",
-        padding: "0.45rem 0.95rem",
-        fontFamily: FONT_BODY,
-        fontSize: "0.78rem",
-        fontWeight: 500,
-        textDecoration: "none",
-        transition: "all 0.2s ease",
-      }}
-    >
-      {children}
-    </a>
-  );
-}
-
-function GridCard({
-  href,
-  iconBg,
-  svg,
-  name,
-  desc,
-  badge,
-}: {
-  href: string;
-  iconBg: string;
-  svg: React.ReactNode;
-  name: string;
-  desc: string;
-  badge: React.ReactNode;
-}) {
-  return (
-    <a
-      href={href}
-      target="_blank"
-      rel="noreferrer"
-      className="grid-card"
-      style={{
-        position: "relative",
-        overflow: "hidden",
-        display: "flex",
-        flexDirection: "column",
-        gap: 10,
-        padding: "1.2rem 1.1rem",
-        borderRadius: 18,
-        border: "1px solid rgba(255,255,255,0.06)",
-        background: "rgba(255,255,255,0.025)",
-        textDecoration: "none",
-        color: "inherit",
-        transition: "all 0.25s ease",
-      }}
-    >
-      <div
-        style={{
-          width: 44,
-          height: 44,
-          borderRadius: 12,
-          background: iconBg,
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        {svg}
-      </div>
-      <div
-        style={{
-          fontFamily: FONT_BODY,
-          fontWeight: 600,
-          fontSize: "0.88rem",
-          color: "#e9e2ff",
-        }}
-      >
-        {name}
-      </div>
-      <div
-        style={{
-          fontFamily: FONT_BODY,
-          fontWeight: 400,
-          fontSize: "0.72rem",
-          color: "#7463a0",
-          lineHeight: 1.4,
-          flex: 1,
-        }}
-      >
-        {desc}
-      </div>
-      <div>{badge}</div>
-    </a>
-  );
-}
-
-function AgentRow({
-  href,
-  svg,
-  name,
-  role,
-  label,
-  dot,
-  avatarBg,
-  avatarBorder,
-}: {
-  href: string;
-  svg: React.ReactNode;
-  name: string;
-  role: string;
-  label: string;
-  dot: string;
-  avatarBg: string;
-  avatarBorder: string;
-}) {
-  return (
-    <a
-      href={href}
-      target="_blank"
-      rel="noreferrer"
-      className="agent-row"
-      style={{
-        display: "flex",
-        alignItems: "center",
-        gap: 12,
-        padding: "0.85rem 0.95rem",
-        borderRadius: 13,
-        border: "1px solid rgba(255,255,255,0.05)",
-        background: "rgba(255,255,255,0.02)",
-        textDecoration: "none",
-        color: "inherit",
-        transition: "all 0.25s ease",
-      }}
-    >
-      <div style={{ position: "relative", flexShrink: 0 }}>
-        <div
-          style={{
-            width: 40,
-            height: 40,
-            borderRadius: 11,
-            background: avatarBg,
-            border: `1px solid ${avatarBorder}`,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          {svg}
-        </div>
-        <span
-          style={{
-            position: "absolute",
-            bottom: -2,
-            right: -2,
-            width: 8,
-            height: 8,
-            borderRadius: "50%",
-            background: dot,
-            border: "2px solid #05050f",
-            animation: "blink 1.6s infinite",
-          }}
-        />
-      </div>
-      <div style={{ flex: 1, minWidth: 0 }}>
-        <div style={{ fontFamily: FONT_BODY, fontWeight: 600, fontSize: "0.88rem", color: "#e9e2ff" }}>
-          {name}
-        </div>
-        <div style={{ fontFamily: FONT_BODY, fontSize: "0.72rem", color: "#7463a0", lineHeight: 1.4 }}>
-          {role}
-        </div>
-      </div>
-      <span style={{ fontFamily: FONT_MONO, fontSize: "0.6rem", color: "#4d3e70", letterSpacing: 1 }}>
-        {label}
-      </span>
-    </a>
-  );
-}
-
-function LandingRow({
-  href,
-  emoji,
-  name,
-  tag,
-}: {
-  href: string;
-  emoji: string;
-  name: string;
-  tag: string;
-}) {
-  return (
-    <a
-      href={href}
-      target="_blank"
-      rel="noreferrer"
-      className="landing-row"
-      style={{
-        display: "flex",
-        alignItems: "center",
-        gap: 12,
-        padding: "0.75rem 0.9rem",
-        borderRadius: 11,
-        border: "1px solid rgba(255,255,255,0.04)",
-        background: "rgba(255,255,255,0.015)",
-        textDecoration: "none",
-        color: "inherit",
-        transition: "all 0.25s ease",
-      }}
-    >
-      <div
-        style={{
-          width: 34,
-          height: 34,
-          borderRadius: 9,
-          background: "rgba(236,72,153,0.08)",
-          border: "1px solid rgba(236,72,153,0.15)",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          fontSize: 16,
-        }}
-      >
-        {emoji}
-      </div>
-      <div
-        style={{
-          flex: 1,
-          fontFamily: FONT_BODY,
-          fontWeight: 600,
-          fontSize: "0.83rem",
-          color: "#c8bfe0",
-        }}
-      >
-        {name}
-      </div>
-      <span
-        style={{
-          fontFamily: FONT_MONO,
-          fontSize: "0.58rem",
-          letterSpacing: 1.2,
-          background: "rgba(236,72,153,0.08)",
-          border: "1px solid rgba(236,72,153,0.18)",
-          color: "#f9a8d4",
-          padding: "3px 6px",
-          borderRadius: 5,
-        }}
-      >
-        {tag}
-      </span>
-    </a>
-  );
-}
-
-/* ---------- CSS ---------- */
 const css = `
-html, body { background:#05050f; margin:0; padding:0; }
-body { color:#e9e2ff; font-family:'Outfit', system-ui, sans-serif; }
+.aurora-wrap { position:fixed; inset:0; z-index:0; overflow:hidden; background:#070512; }
+.aurora { position:absolute; border-radius:50%; filter:blur(75px); }
+.a1 { width:420px; height:420px; background:#7c3aed; opacity:.6; top:-120px; left:-100px; animation:drift1 16s ease-in-out infinite; }
+.a2 { width:380px; height:380px; background:#ec4899; opacity:.5; top:22%; right:-140px; animation:drift2 20s ease-in-out infinite; }
+.a3 { width:360px; height:360px; background:#4f46e5; opacity:.5; bottom:-100px; left:-70px; animation:drift3 18s ease-in-out infinite; }
+.a4 { width:280px; height:280px; background:#db2777; opacity:.35; top:60%; left:25%; animation:drift1 24s ease-in-out infinite; }
+.a5 { width:300px; height:300px; background:#6d28d9; opacity:.4; top:38%; left:-60px; animation:drift2 22s ease-in-out infinite; }
+@keyframes drift1 { 0%,100%{transform:translate(0,0) scale(1)} 50%{transform:translate(40px,55px) scale(1.15)} }
+@keyframes drift2 { 0%,100%{transform:translate(0,0) scale(1)} 50%{transform:translate(-55px,40px) scale(1.1)} }
+@keyframes drift3 { 0%,100%{transform:translate(0,0) scale(1)} 50%{transform:translate(45px,-40px) scale(1.18)} }
 
-@keyframes blink {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.35; }
-}
-@keyframes glowPulse {
-  0%, 100% { transform: scale(1); opacity: 0.7; }
-  50% { transform: scale(1.08); opacity: 1; }
-}
-@keyframes spin {
-  to { transform: rotate(360deg); }
-}
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(18px); }
-  to { opacity: 1; transform: translateY(0); }
+.grade { position:fixed; inset:0; z-index:1; pointer-events:none; opacity:.4;
+  background-image:linear-gradient(rgba(160,120,255,0.06) 1px,transparent 1px),linear-gradient(90deg,rgba(160,120,255,0.06) 1px,transparent 1px);
+  background-size:40px 40px;
+  -webkit-mask-image:radial-gradient(ellipse at 50% 25%,#000,transparent 70%);
+  mask-image:radial-gradient(ellipse at 50% 25%,#000,transparent 70%); }
+.veu { position:fixed; inset:0; z-index:1; pointer-events:none;
+  background:radial-gradient(ellipse at 50% 0%,rgba(7,5,18,0.1),rgba(7,5,18,0.74) 70%); }
+.scan { position:fixed; left:0; right:0; height:160px; z-index:5; pointer-events:none;
+  background:linear-gradient(to bottom,transparent,rgba(180,150,255,0.08),transparent);
+  animation:scandown 2.4s ease-out 1 forwards; }
+@keyframes scandown { 0%{top:-160px;opacity:1} 100%{top:110vh;opacity:0} }
+
+.cv-main { position:relative; z-index:2; max-width:460px; margin:0 auto; padding:2.6rem 1.2rem 2.4rem; font-family:${FONT_BODY}; color:#f6f3ff; }
+body { background:#070512; }
+
+.rise { opacity:0; transform:translateY(22px); animation:rise .7s cubic-bezier(.2,.7,.3,1) forwards; }
+.rise:nth-child(2){animation-delay:1.3s} .rise:nth-child(3){animation-delay:1.42s}
+.rise:nth-child(4){animation-delay:1.54s} .rise:nth-child(5){animation-delay:1.66s}
+.rise:nth-child(6){animation-delay:1.78s} .rise:nth-child(7){animation-delay:1.9s}
+@keyframes rise { to{opacity:1;transform:none} }
+
+.hero { text-align:center; margin-bottom:2.2rem; }
+.orb-stage { width:150px; height:150px; margin:0 auto 1.2rem; position:relative; animation:orbBoot 1.2s cubic-bezier(.2,.8,.2,1) both; }
+@keyframes orbBoot { 0%{transform:scale(0);opacity:0} 60%{transform:scale(1.12)} 100%{transform:scale(1);opacity:1} }
+.orb-stage svg { position:absolute; inset:0; width:100%; height:100%; }
+.ring-a { animation:spin 14s linear infinite; transform-origin:75px 75px; }
+.ring-b { animation:spinR 10s linear infinite; transform-origin:75px 75px; }
+.ring-c { animation:spin 20s linear infinite; transform-origin:75px 75px; }
+@keyframes spin { to{transform:rotate(360deg)} }
+@keyframes spinR { to{transform:rotate(-360deg)} }
+.core-glow { animation:coreGlow 3.2s ease-in-out infinite; transform-origin:75px 75px; }
+@keyframes coreGlow { 0%,100%{opacity:.85;transform:scale(1)} 50%{opacity:1;transform:scale(1.06)} }
+.orbit-1 { animation:spin 8s linear infinite; transform-origin:75px 75px; }
+.orbit-2 { animation:spinR 12s linear infinite; transform-origin:75px 75px; }
+.orbit-3 { animation:spin 16s linear infinite; transform-origin:75px 75px; }
+.eye-scan { animation:eyeScan 4s ease-in-out infinite; }
+@keyframes eyeScan { 0%,100%{transform:translateY(-4px);opacity:.4} 50%{transform:translateY(4px);opacity:1} }
+
+.kicker { font-family:${FONT_MONO}; font-size:.66rem; color:#b9a3ff; letter-spacing:4px; text-transform:lowercase; margin-bottom:.6rem; }
+.cv-h1 { font-size:1.8rem; font-weight:800; letter-spacing:-.5px; background:linear-gradient(90deg,#fff,#d6c9ff 45%,#fbb6ce); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; margin-bottom:.5rem; }
+.sub { font-size:.92rem; color:#c8bee6; font-weight:300; }
+.pills { display:flex; gap:8px; justify-content:center; margin-top:1.3rem; flex-wrap:wrap; }
+.pill { display:inline-flex; align-items:center; gap:7px; text-decoration:none; border-radius:100px; border:1px solid rgba(180,150,255,.3); background:rgba(124,58,237,.14); color:#dccdff; padding:.5rem 1.05rem; font-size:.8rem; font-weight:500; transition:.2s; -webkit-tap-highlight-color:transparent; }
+.pill:active { background:rgba(124,58,237,.3); transform:scale(.96); }
+.pill svg { width:15px; height:15px; }
+
+.copy { margin:0 auto 2rem; max-width:400px; text-align:center; font-size:.92rem; line-height:1.65; color:#c8bee6; }
+.copy b { color:#f6f3ff; font-weight:600; }
+
+.seclabel { display:flex; align-items:center; gap:10px; margin:2.1rem 0 1rem; }
+.seclabel .br { width:6px; height:6px; border-radius:1px; background:#b9a3ff; box-shadow:0 0 8px #b9a3ff; transform:rotate(45deg); flex-shrink:0; animation:blink 2s infinite; }
+.seclabel span { font-family:${FONT_MONO}; font-size:.63rem; letter-spacing:2.5px; text-transform:uppercase; color:#c2b2e8; white-space:nowrap; }
+.seclabel .line { flex:1; height:1px; background:linear-gradient(90deg,rgba(160,120,255,.45),transparent); }
+
+.glass { background:linear-gradient(135deg,rgba(124,90,200,0.1),rgba(124,90,200,0.04)); border:1px solid rgba(180,150,255,0.14); }
+@supports ((-webkit-backdrop-filter:blur(2px)) or (backdrop-filter:blur(2px))) {
+  .glass { background:rgba(124,90,200,0.08); -webkit-backdrop-filter:blur(14px); backdrop-filter:blur(14px); }
 }
 
-.fade-up { animation: fadeUp 0.6s ease both; }
-.fade-up:nth-of-type(2) { animation-delay: 0.08s; }
-.fade-up:nth-of-type(3) { animation-delay: 0.16s; }
-.fade-up:nth-of-type(4) { animation-delay: 0.24s; }
-.fade-up:nth-of-type(5) { animation-delay: 0.32s; }
-.fade-up:nth-of-type(6) { animation-delay: 0.40s; }
-.fade-up:nth-of-type(7) { animation-delay: 0.48s; }
+.destaque { display:flex; gap:14px; align-items:center; text-decoration:none; padding:1.1rem; border-radius:18px; border:1px solid rgba(16,185,129,.32); background:linear-gradient(135deg,rgba(16,185,129,.12),rgba(124,58,237,.06)); transition:.2s; margin-bottom:.7rem; position:relative; overflow:hidden; -webkit-tap-highlight-color:transparent; }
+.destaque::before { content:''; position:absolute; inset:0; border-radius:18px; background:linear-gradient(135deg,rgba(110,231,183,.08),transparent 60%); animation:sheen 4s ease-in-out infinite; }
+@keyframes sheen { 0%,100%{opacity:.3} 50%{opacity:.7} }
+.destaque:active { transform:scale(.985); }
+.destaque .ic { width:54px; height:54px; flex-shrink:0; border-radius:14px; background:linear-gradient(135deg,#064e3b,#065f46); display:flex; align-items:center; justify-content:center; border:1px solid rgba(110,231,183,.25); position:relative; z-index:1; }
+.destaque .tx { position:relative; z-index:1; }
+.destaque h3 { font-size:1rem; font-weight:700; color:#fff; display:flex; align-items:center; gap:8px; margin-bottom:3px; flex-wrap:wrap; }
+.destaque p { font-size:.8rem; color:#c8bee6; line-height:1.4; }
 
-.conic-border {
-  background: conic-gradient(from 180deg, #6D28D9, #EC4899, #818cf8, #6D28D9);
-  animation: spin 5s linear infinite;
-}
+.grid { display:grid; grid-template-columns:1fr 1fr; gap:.7rem; }
+.gcard { position:relative; overflow:hidden; display:flex; flex-direction:column; gap:11px; text-decoration:none; padding:1.15rem 1rem; border-radius:16px; transition:.2s; -webkit-tap-highlight-color:transparent; }
+.gcard:active { transform:scale(.97); }
+.gcard .ic { width:46px; height:46px; border-radius:13px; display:flex; align-items:center; justify-content:center; border:1px solid rgba(255,255,255,.09); }
+.gcard h4 { font-size:.93rem; font-weight:600; color:#f6f3ff; }
+.gcard .desc { font-size:.76rem; color:#9a8cc2; line-height:1.45; flex:1; }
 
-.wide-card:hover {
-  border-color: rgba(16,185,129,0.4) !important;
-  transform: translateX(4px);
-}
-.grid-card:hover {
-  border-color: rgba(109,40,217,0.45) !important;
-  transform: translateY(-3px);
-  background: linear-gradient(135deg,rgba(109,40,217,0.1),rgba(255,255,255,0.025)) !important;
-}
-.agent-row:hover {
-  border-color: rgba(109,40,217,0.3) !important;
-  background: rgba(109,40,217,0.06) !important;
-  transform: translateX(4px);
-}
-.landing-row:hover {
-  border-color: rgba(236,72,153,0.25) !important;
-  background: rgba(236,72,153,0.04) !important;
-  transform: translateX(4px);
+.badge { font-family:${FONT_MONO}; font-size:.57rem; border-radius:6px; padding:3px 8px; display:inline-flex; align-items:center; gap:5px; letter-spacing:1px; font-weight:600; width:fit-content; }
+.b-live { background:rgba(16,185,129,.16); color:#6ee7b7; border:1px solid rgba(16,185,129,.38); }
+.b-beta { background:rgba(245,158,11,.16); color:#fcd34d; border:1px solid rgba(245,158,11,.38); }
+.b-case { background:rgba(167,139,250,.18); color:#c4b5fd; border:1px solid rgba(167,139,250,.38); }
+.dot { width:6px; height:6px; border-radius:50%; background:#10b981; box-shadow:0 0 7px #10b981; animation:blink 1.4s infinite; }
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:.3} }
+
+.agentes,.linhas { display:flex; flex-direction:column; gap:.55rem; }
+.agente { display:flex; align-items:center; gap:12px; text-decoration:none; padding:.85rem .95rem; border-radius:14px; transition:.2s; -webkit-tap-highlight-color:transparent; }
+.agente:active { transform:scale(.985); }
+.agente .av { position:relative; width:42px; height:42px; border-radius:12px; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+.agente .av .sd { position:absolute; bottom:-2px; right:-2px; width:10px; height:10px; border-radius:50%; border:2px solid #070512; animation:blink 1.6s infinite; }
+.agente .nm { font-size:.91rem; font-weight:600; color:#f6f3ff; }
+.agente .rl { font-size:.74rem; color:#9a8cc2; line-height:1.3; }
+.agente .lb { margin-left:auto; font-family:${FONT_MONO}; font-size:.6rem; letter-spacing:1px; color:#9d8fc4; flex-shrink:0; }
+
+.linha { display:flex; align-items:center; gap:12px; text-decoration:none; padding:.85rem .95rem; border-radius:13px; transition:.2s; -webkit-tap-highlight-color:transparent; }
+.linha:active { transform:scale(.985); }
+.linha .em { width:38px; height:38px; border-radius:10px; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+.linha .nm { font-size:.85rem; font-weight:600; color:#c8bee6; }
+.linha .tg { margin-left:auto; font-family:${FONT_MONO}; font-size:.58rem; letter-spacing:1.2px; padding:3px 8px; border-radius:5px; flex-shrink:0; }
+
+.cta { position:relative; overflow:hidden; border-radius:18px; padding:1.6rem; border:1px solid rgba(124,58,237,.35); background:linear-gradient(135deg,rgba(124,58,237,.2),rgba(236,72,153,.12)); }
+.cta-glow { position:absolute; top:-50px; left:-50px; width:190px; height:190px; background:radial-gradient(circle,rgba(160,120,255,.3),transparent 70%); pointer-events:none; animation:ctaPulse 4s ease-in-out infinite; }
+@keyframes ctaPulse { 0%,100%{opacity:.5;transform:scale(1)} 50%{opacity:.9;transform:scale(1.15)} }
+.cta h3 { font-size:1.12rem; font-weight:700; color:#fff; margin-bottom:.5rem; position:relative; }
+.cta p { font-size:.85rem; color:#c8bee6; line-height:1.55; margin-bottom:1.1rem; position:relative; }
+.cta a { position:relative; display:flex; align-items:center; justify-content:center; gap:8px; text-decoration:none; width:100%; padding:.92rem 1rem; border-radius:12px; background:linear-gradient(135deg,#7c3aed,#ec4899); color:#fff; font-weight:600; font-size:.9rem; box-shadow:0 4px 22px -6px rgba(236,72,153,.55); transition:.2s; -webkit-tap-highlight-color:transparent; }
+.cta a:active { transform:scale(.98); }
+
+.cv-footer { margin-top:2.4rem; text-align:center; font-family:${FONT_MONO}; font-size:.6rem; color:#5e4f86; letter-spacing:1.5px; }
+.cv-footer .blink-dot { display:inline-block; width:5px; height:5px; border-radius:50%; background:#10b981; box-shadow:0 0 6px #10b981; margin-right:6px; vertical-align:middle; animation:blink 1.4s infinite; }
+
+/* "Reduzir movimento": removemos só o que é grande ou de varredura (entrada
+   e scan full-screen, que é o que pode incomodar de verdade) e garantimos que
+   o conteúdo apareça sem depender de animação. As micro-animações ambientais,
+   lentas e sutis (aurora, orbe, brilhos, pulsos) continuam — sem o marretão
+   '*{animation:none!important}', que deixava a página inteira parada. */
+@media (prefers-reduced-motion:reduce){
+  .rise{opacity:1;transform:none;animation:none}
+  .orb-stage{animation:none}
+  .scan{display:none}
 }
 `;

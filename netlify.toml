@@ -1,0 +1,24 @@
+# Netlify deploy config for TanStack Start (SSR via Nitro "netlify" preset).
+#
+# The build (vite build) runs Nitro with `preset: "netlify"` — see vite.config.ts —
+# which emits:
+#   - dist/client/        -> static client assets (published to the CDN)
+#   - dist/server/        -> the SSR bundle, including server.mjs, a Netlify
+#                            Function v2 with `config.path = "/*"` (catch-all) and
+#                            `preferStatic: true` (static files win before SSR runs).
+#
+# Without this file Netlify would serve only the static client and 404 every route,
+# because it wouldn't know the SSR function lives in dist/server.
+
+[build]
+  command = "npm run build"
+  publish = "dist/client"
+
+[build.environment]
+  NODE_VERSION = "22"
+
+[functions]
+  # The Nitro netlify preset pre-bundles everything, so Netlify must NOT re-bundle.
+  directory = "dist/server"
+  node_bundler = "none"
+  included_files = ["dist/server/**"]

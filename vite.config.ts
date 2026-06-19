@@ -12,4 +12,10 @@ export default defineConfig({
   tanstackStart: {
     server: { entry: "server" },
   },
+  // Force the Nitro deploy bundle with the Netlify preset. Without an explicit
+  // `nitro` option, the wrapper skips Nitro entirely outside the Lovable sandbox
+  // (Vite-only build, no SSR server) — which is why Netlify served only the
+  // static client and 404'd every route. `preset: "netlify"` makes Nitro emit a
+  // Netlify Function for SSR plus the static client.
+  nitro: { preset: "netlify" },
 });

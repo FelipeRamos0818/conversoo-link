@@ -90,35 +90,52 @@ function Index() {
           Tudo que você vê aqui, <b>a gente construiu</b>. Plataformas, automações e agentes de IA. Se você tem um problema no seu negócio, a gente provavelmente já sabe como resolver.
         </p>
 
+        {/* LANDING PAGES */}
+        <div className="rise">
+          <div className="seclabel"><span className="br" /><span>Landing pages</span><div className="line" /></div>
+          <div className="linhas landing">
+            <a className="linha glass" href="https://conversoo-grow-page.lovable.app" target="_blank" rel="noreferrer"><div className="em"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#93c5fd" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><path d="M5 19l3-3M14 6c4 0 4 4 4 4s-4 4-8 4l-2-2c0-4 4-6 6-6z" fill="rgba(147,197,253,.12)" /><circle cx="14.5" cy="9.5" r="1" /></svg></div><div className="txt"><div className="nm">Conversoo — Site Institucional</div></div><span className="tg" style={{ background: "rgba(124,58,237,.2)", border: "1px solid rgba(167,139,250,.5)", color: "#d6c9ff" }}>CONVERSOO</span></a>
+            <a className="linha glass" href="https://afonte.conversoo.cloud" target="_blank" rel="noreferrer"><div className="em"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#93c5fd" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><path d="M4 5a2 2 0 0 1 2-2h9a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1H6a2 2 0 0 0-2 2z" fill="rgba(147,197,253,.1)" /><path d="M11 6v6M8.5 9h5" /></svg></div><div className="txt"><div className="nm">A Fonte</div><div className="rl">Estudo bíblico guiado via WhatsApp e web</div></div><span className="badge b-beta">BETA</span></a>
+            <a className="linha glass" href="https://cb-advocacia.netlify.app" target="_blank" rel="noreferrer"><div className="em"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#93c5fd" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><rect x="4" y="7" width="16" height="13" rx="2" fill="rgba(147,197,253,.1)" /><path d="M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2M9 13h6" /></svg></div><div className="txt"><div className="nm">CB Advocacia</div><div className="rl">Landing page e copy para escritório de advocacia bancária</div></div><span className="badge b-case">CASE</span></a>
+            <a className="linha glass" href="https://energizante.aromasamore.com.br" target="_blank" rel="noreferrer"><div className="em"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#93c5fd" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><path d="M13 2L4 14h6l-1 8 9-12h-6z" fill="rgba(147,197,253,.12)" /></svg></div><div className="txt"><div className="nm">Amoré — Linha Energizante</div></div><span className="tg" style={{ background: "rgba(236,72,153,.16)", border: "1px solid rgba(244,114,182,.45)", color: "#fbcfe8" }}>AMORÉ</span></a>
+            <a className="linha glass" href="https://equilibrio.aromasamore.com.br" target="_blank" rel="noreferrer"><div className="em"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#93c5fd" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><path d="M11 20A7 7 0 0 1 9 6c4-2 9-2 11-3 .5 4 0 11-4 14a7 7 0 0 1-5 3z" fill="rgba(147,197,253,.12)" /><path d="M11 20c0-4 2-8 5-10" /></svg></div><div className="txt"><div className="nm">Amoré — Linha Equilíbrio</div></div><span className="tg" style={{ background: "rgba(236,72,153,.16)", border: "1px solid rgba(244,114,182,.45)", color: "#fbcfe8" }}>AMORÉ</span></a>
+          </div>
+        </div>
+
         {/* PLATAFORMAS */}
         <div className="rise">
           <div className="seclabel"><span className="br" /><span>Plataformas</span><div className="line" /></div>
 
-          <a className="destaque" href="https://bolao.conversoo.cloud" target="_blank" rel="noreferrer">
-            <div className="ic"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#6ee7b7" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><path d="M6 9a6 6 0 0 0 12 0V4H6z" /><path d="M6 5H4a2 2 0 0 0 0 4h2M18 5h2a2 2 0 0 1 0 4h-2" /><path d="M12 15v3M9 21h6" /></svg></div>
-            <div className="tx"><h3>Bolão da Copa 2026 <span className="badge b-live"><span className="dot" />LIVE</span></h3><p>Palpites, ranking e pontuação automática com seus amigos</p></div>
-          </a>
-
           <div className="grid">
             <a className="gcard glass" href="https://querapostar.conversoo.cloud" target="_blank" rel="noreferrer">
-              <div className="ic" style={{ background: "linear-gradient(135deg,#1e1b4b,#312e81)" }}><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#a5b4fc" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="9" /><circle cx="12" cy="12" r="4" /><path d="M12 3v3M12 18v3M3 12h3M18 12h3" /></svg></div>
+              <div className="ic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#c4b5fd" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="9" /><circle cx="12" cy="12" r="4" /><path d="M12 3v3M12 18v3M3 12h3M18 12h3" /></svg></div>
               <h4>Quer Apostar?</h4><div className="desc">Apostas personalizadas entre amigos em qualquer tema</div>
               <span className="badge b-live"><span className="dot" />LIVE</span>
             </a>
             <a className="gcard glass" href="https://glam-glow-gate.lovable.app" target="_blank" rel="noreferrer">
-              <div className="ic" style={{ background: "linear-gradient(135deg,#4a1040,#7c1d6f)" }}><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#f0abfc" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2l2.2 4.5L19 7l-3.5 3.4.8 4.8L12 13l-4.3 2.2.8-4.8L5 7l4.8-.5z" fill="rgba(240,171,252,.12)" /><path d="M12 13v9" /></svg></div>
+              <div className="ic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#c4b5fd" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2l2.2 4.5L19 7l-3.5 3.4.8 4.8L12 13l-4.3 2.2.8-4.8L5 7l4.8-.5z" fill="rgba(196,181,253,.14)" /><path d="M12 13v9" /></svg></div>
               <h4>Glowly</h4><div className="desc">Agendamento para salões e estéticas com IA</div>
               <span className="badge b-beta">BETA</span>
             </a>
             <a className="gcard glass" href="https://quintaloka.conversoo.cloud" target="_blank" rel="noreferrer">
-              <div className="ic" style={{ background: "linear-gradient(135deg,#2d1200,#451a03)" }}><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fb923c" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><path d="M8 21h8M12 17v4M7 4h10l-1 7a4 4 0 0 1-8 0z" /><path d="M5 4h14" /><circle cx="18" cy="6" r="1.3" fill="#a855f7" stroke="none" /></svg></div>
+              <div className="ic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#c4b5fd" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><path d="M8 21h8M12 17v4M7 4h10l-1 7a4 4 0 0 1-8 0z" /><path d="M5 4h14" /><circle cx="18" cy="6" r="1.3" fill="#c4b5fd" stroke="none" /></svg></div>
               <h4>Quinta Loka</h4><div className="desc">Jantas com amigos: sorteio, cardápio por IA e divisão de gastos</div>
               <span className="badge b-live"><span className="dot" />LIVE</span>
             </a>
             <a className="gcard glass" href="https://catalogo.aromasamore.com.br" target="_blank" rel="noreferrer">
-              <div className="ic" style={{ background: "linear-gradient(135deg,#4a1535,#7c1d55)" }}><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fda4af" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><path d="M12 3s-5 4-5 9a5 5 0 0 0 10 0c0-5-5-9-5-9z" fill="rgba(253,164,175,.12)" /><path d="M12 11c-1.5 1-1.5 3 0 4" /></svg></div>
+              <div className="ic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#c4b5fd" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><path d="M12 3s-5 4-5 9a5 5 0 0 0 10 0c0-5-5-9-5-9z" fill="rgba(196,181,253,.14)" /><path d="M12 11c-1.5 1-1.5 3 0 4" /></svg></div>
               <h4>Amoré Catálogo</h4><div className="desc">Catálogo digital + automação de vendas</div>
               <span className="badge b-case">CASE</span>
+            </a>
+            <a className="gcard glass" href="https://lp-organizador-financeiro-production.up.railway.app" target="_blank" rel="noreferrer">
+              <div className="ic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#c4b5fd" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><path d="M3 3v18h18" /><rect x="7" y="12" width="3" height="5" fill="rgba(196,181,253,.16)" /><rect x="12" y="9" width="3" height="8" fill="rgba(196,181,253,.16)" /><rect x="17" y="6" width="3" height="11" fill="rgba(196,181,253,.16)" /></svg></div>
+              <h4>Meu Organizador Financeiro</h4><div className="desc">Plataforma financeira personalizada para gestão de negócio</div>
+              <span className="badge b-case">CASE</span>
+            </a>
+            <a className="gcard glass" href="https://bolao.conversoo.cloud" target="_blank" rel="noreferrer">
+              <div className="ic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#c4b5fd" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><path d="M6 9a6 6 0 0 0 12 0V4H6z" /><path d="M6 5H4a2 2 0 0 0 0 4h2M18 5h2a2 2 0 0 1 0 4h-2" /><path d="M12 15v3M9 21h6" /></svg></div>
+              <h4>Bolão da Copa 2026</h4><div className="desc">Palpites, ranking e pontuação automática com seus amigos</div>
+              <span className="badge b-done">ENCERRADO</span>
             </a>
           </div>
 
@@ -133,27 +150,17 @@ function Index() {
           <div className="seclabel"><span className="br" /><span>Agentes IA ativos</span><div className="line" /></div>
           <div className="agentes">
             <a className="agente glass" href="https://conversoo-grow-page.lovable.app" target="_blank" rel="noreferrer">
-              <div className="av" style={{ background: "rgba(124,58,237,.16)", border: "1px solid rgba(124,58,237,.32)" }}><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#c4b5fd" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><rect x="5" y="8" width="14" height="11" rx="3" /><path d="M12 8V5M12 5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z" /><circle cx="9.5" cy="13" r="1" fill="#c4b5fd" stroke="none" /><circle cx="14.5" cy="13" r="1" fill="#c4b5fd" stroke="none" /></svg><span className="sd" style={{ background: "#10b981", boxShadow: "0 0 6px #10b981" }} /></div>
+              <div className="av"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#6ee7b7" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><rect x="5" y="8" width="14" height="11" rx="3" /><path d="M12 8V5M12 5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z" /><circle cx="9.5" cy="13" r="1" fill="#6ee7b7" stroke="none" /><circle cx="14.5" cy="13" r="1" fill="#6ee7b7" stroke="none" /></svg><span className="sd" style={{ background: "#10b981", boxShadow: "0 0 6px #10b981" }} /></div>
               <div><div className="nm">Lia</div><div className="rl">Atendimento e diagnóstico comercial</div></div><span className="lb">CONVERSOO</span>
             </a>
             <a className="agente glass" href="https://glam-glow-gate.lovable.app" target="_blank" rel="noreferrer">
-              <div className="av" style={{ background: "rgba(245,158,11,.11)", border: "1px solid rgba(245,158,11,.24)" }}><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#f0abfc" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><path d="M20 14a8 8 0 1 1-9-11 6 6 0 0 0 9 11z" fill="rgba(240,171,252,.12)" /></svg><span className="sd" style={{ background: "#f59e0b", boxShadow: "0 0 6px #f59e0b" }} /></div>
+              <div className="av"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#6ee7b7" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><path d="M20 14a8 8 0 1 1-9-11 6 6 0 0 0 9 11z" fill="rgba(110,231,183,.12)" /></svg><span className="sd" style={{ background: "#f59e0b", boxShadow: "0 0 6px #f59e0b" }} /></div>
               <div><div className="nm">Luna</div><div className="rl">Agendamento e atendimento</div></div><span className="lb">GLOWLY</span>
             </a>
             <a className="agente glass" href="https://catalogo.aromasamore.com.br" target="_blank" rel="noreferrer">
-              <div className="av" style={{ background: "rgba(236,72,153,.11)", border: "1px solid rgba(236,72,153,.24)" }}><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fda4af" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><path d="M12 8s3 2 3 5a3 3 0 0 1-6 0c0-3 3-5 3-5z" fill="rgba(253,164,175,.15)" /><path d="M8 19c1.3 1.3 2.7 2 4 2s2.7-.7 4-2" /></svg><span className="sd" style={{ background: "#10b981", boxShadow: "0 0 6px #10b981" }} /></div>
+              <div className="av"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#6ee7b7" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><path d="M12 8s3 2 3 5a3 3 0 0 1-6 0c0-3 3-5 3-5z" fill="rgba(110,231,183,.15)" /><path d="M8 19c1.3 1.3 2.7 2 4 2s2.7-.7 4-2" /></svg><span className="sd" style={{ background: "#10b981", boxShadow: "0 0 6px #10b981" }} /></div>
               <div><div className="nm">Pã</div><div className="rl">Vendas e relacionamento, centenas de leads/semana</div></div><span className="lb">AMORÉ</span>
             </a>
-          </div>
-        </div>
-
-        {/* LANDING PAGES */}
-        <div className="rise">
-          <div className="seclabel"><span className="br" /><span>Landing pages</span><div className="line" /></div>
-          <div className="linhas">
-            <a className="linha glass" href="https://conversoo-grow-page.lovable.app" target="_blank" rel="noreferrer"><div className="em" style={{ background: "rgba(124,58,237,.13)", border: "1px solid rgba(124,58,237,.22)" }}><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#c4b5fd" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><path d="M5 19l3-3M14 6c4 0 4 4 4 4s-4 4-8 4l-2-2c0-4 4-6 6-6z" fill="rgba(196,181,253,.1)" /><circle cx="14.5" cy="9.5" r="1" /></svg></div><div className="nm">Conversoo — Site Institucional</div><span className="tg" style={{ background: "rgba(124,58,237,.1)", border: "1px solid rgba(124,58,237,.25)", color: "#c4b5fd" }}>CONVERSOO</span></a>
-            <a className="linha glass" href="https://energizante.aromasamore.com.br" target="_blank" rel="noreferrer"><div className="em" style={{ background: "rgba(236,72,153,.1)", border: "1px solid rgba(236,72,153,.22)" }}><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#f9a8d4" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><path d="M13 2L4 14h6l-1 8 9-12h-6z" fill="rgba(249,168,212,.15)" /></svg></div><div className="nm">Amoré — Linha Energizante</div><span className="tg" style={{ background: "rgba(236,72,153,.09)", border: "1px solid rgba(236,72,153,.22)", color: "#f9a8d4" }}>AMORÉ</span></a>
-            <a className="linha glass" href="https://equilibrio.aromasamore.com.br" target="_blank" rel="noreferrer"><div className="em" style={{ background: "rgba(16,185,129,.1)", border: "1px solid rgba(16,185,129,.22)" }}><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#6ee7b7" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><path d="M11 20A7 7 0 0 1 9 6c4-2 9-2 11-3 .5 4 0 11-4 14a7 7 0 0 1-5 3z" fill="rgba(110,231,183,.12)" /><path d="M11 20c0-4 2-8 5-10" /></svg></div><div className="nm">Amoré — Linha Equilíbrio</div><span className="tg" style={{ background: "rgba(16,185,129,.09)", border: "1px solid rgba(16,185,129,.22)", color: "#6ee7b7" }}>AMORÉ</span></a>
           </div>
         </div>
 
@@ -308,6 +315,22 @@ body { background:#070512; }
    o conteúdo apareça sem depender de animação. As micro-animações ambientais,
    lentas e sutis (aurora, orbe, brilhos, pulsos) continuam — sem o marretão
    '*{animation:none!important}', que deixava a página inteira parada. */
+/* Cor de ícone consistente por categoria (sobrescreve os bg/stroke por card).
+   CSS 'stroke' vence o atributo stroke="" do SVG; fills decorativos ficam. */
+.grid .ic { background:linear-gradient(135deg,#3a1d6e,#4c2889); border-color:rgba(167,139,250,.3); }
+.grid .ic svg { stroke:#c4b5fd; }
+.linhas.landing .em { background:rgba(59,130,246,.14); border:1px solid rgba(96,165,250,.34); }
+.linhas.landing .em svg { stroke:#93c5fd; }
+.agentes .av { background:rgba(16,185,129,.14); border:1px solid rgba(52,211,153,.34); }
+.agentes .av svg { stroke:#6ee7b7; }
+.linha .txt { flex:1; min-width:0; }
+.linha .rl { font-size:.72rem; color:#9a8cc2; line-height:1.3; margin-top:2px; }
+/* Badges com mais contraste (mesma especificidade, cascata sobrescreve as de cima). */
+.b-live { background:rgba(16,185,129,.24); color:#8affc9; border:1px solid rgba(16,185,129,.55); }
+.b-beta { background:rgba(245,158,11,.24); color:#ffd97a; border:1px solid rgba(245,158,11,.55); }
+.b-case { background:rgba(167,139,250,.28); color:#dccbff; border:1px solid rgba(167,139,250,.6); }
+.b-done { background:rgba(148,163,184,.2); color:#dbe2ec; border:1px solid rgba(148,163,184,.5); }
+
 @media (prefers-reduced-motion:reduce){
   .rise{opacity:1;transform:none;animation:none}
   .orb-stage{animation:none}

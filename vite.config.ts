@@ -12,10 +12,25 @@ export default defineConfig({
   tanstackStart: {
     server: { entry: "server" },
   },
-  // Force the Nitro deploy bundle with the Netlify preset. Without an explicit
-  // `nitro` option, the wrapper skips Nitro entirely outside the Lovable sandbox
-  // (Vite-only build, no SSR server) — which is why Netlify served only the
-  // static client and 404'd every route. `preset: "netlify"` makes Nitro emit a
-  // Netlify Function for SSR plus the static client.
-  nitro: { preset: "netlify" },
+  // Force the Nitro deploy bundle. Without an explicit `nitro` option, the wrapper
+  // skips Nitro entirely outside the Lovable sandbox (Vite-only build, no SSR server)
+  // — which is why the host served only the static client and 404'd every route.
+  //
+  // Preset is chosen by the build environment: Vercel sets VERCEL=1, everything else
+  // (Netlify included) keeps "netlify".
+  //
+  // The Lovable wrapper hard-codes output to dist/{client,server}. Netlify is happy
+  // with that (netlify.toml points at dist/server). Vercel auto-detects the Build
+  // Output API v3 layout under .vercel/output, so for Vercel we override the output
+  // back to the preset's native locations (static + functions/__server.func).
+  nitro: process.env.VERCEL
+    ? {
+        preset: "vercel",
+        output: {
+          dir: ".vercel/output",
+          serverDir: ".vercel/output/functions/__server.func",
+          publicDir: ".vercel/output/static",
+        },
+      }
+    : { preset: "netlify" },
 });

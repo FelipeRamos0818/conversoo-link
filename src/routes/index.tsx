@@ -32,11 +32,15 @@ function Index() {
           <div className="orb-stage">
             <svg viewBox="0 0 150 150" fill="none">
               <defs>
-                <radialGradient id="coreG" cx="40%" cy="35%" r="70%">
-                  <stop offset="0%" stopColor="#c4b5fd" />
-                  <stop offset="45%" stopColor="#7c3aed" />
-                  <stop offset="100%" stopColor="#db2777" />
-                </radialGradient>
+                <linearGradient id="logoBubble" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0%" stopColor="#b9a3ff" />
+                  <stop offset="55%" stopColor="#7c3aed" />
+                  <stop offset="100%" stopColor="#5b21b6" />
+                </linearGradient>
+                <linearGradient id="logoGear" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0%" stopColor="#ffffff" />
+                  <stop offset="100%" stopColor="#e4d9ff" />
+                </linearGradient>
                 <radialGradient id="haloG" cx="50%" cy="50%" r="50%">
                   <stop offset="0%" stopColor="rgba(124,58,237,.5)" />
                   <stop offset="100%" stopColor="rgba(124,58,237,0)" />
@@ -59,14 +63,30 @@ function Index() {
                 <ellipse cx="75" cy="75" rx="62" ry="44" stroke="#ec4899" strokeWidth="1" opacity=".3" transform="rotate(-25 75 75)" />
                 <circle className="orbit-3" cx="137" cy="75" r="1.8" fill="#f9a8d4" />
               </g>
-              <g className="core-glow">
-                <circle cx="75" cy="75" r="30" fill="url(#coreG)" />
-                <circle cx="75" cy="75" r="30" fill="none" stroke="rgba(255,255,255,.25)" strokeWidth="1" />
-                <ellipse cx="66" cy="64" rx="10" ry="7" fill="rgba(255,255,255,.3)" />
-              </g>
-              <g className="eye-scan">
-                <rect x="60" y="72" width="30" height="3" rx="1.5" fill="rgba(255,255,255,.85)" />
-                <rect x="66" y="78" width="18" height="2" rx="1" fill="rgba(255,255,255,.5)" />
+              <g className="logo-core">
+                <g transform="translate(-3 3)">
+                  {/* bolha de fala */}
+                  <path d="M49 64 A11 11 0 0 1 60 53 L84 53 A11 11 0 0 1 95 64 L95 73 A11 11 0 0 1 84 84 L60 84 L50 97 L49 84 Z" fill="url(#logoBubble)" />
+                  <ellipse cx="63" cy="63" rx="13" ry="7" fill="#ffffff" opacity="0.18" />
+                  <circle cx="63" cy="70" r="3.6" fill="#ffffff" />
+                  <circle cx="72" cy="70" r="3.6" fill="#ffffff" />
+                  <circle cx="81" cy="70" r="3.6" fill="#ffffff" />
+                  {/* engrenagem */}
+                  <g transform="translate(93 55)">
+                    <g fill="url(#logoGear)">
+                      <rect x="-2.3" y="-13.5" width="4.6" height="6.5" rx="1.3" />
+                      <rect x="-2.3" y="-13.5" width="4.6" height="6.5" rx="1.3" transform="rotate(45)" />
+                      <rect x="-2.3" y="-13.5" width="4.6" height="6.5" rx="1.3" transform="rotate(90)" />
+                      <rect x="-2.3" y="-13.5" width="4.6" height="6.5" rx="1.3" transform="rotate(135)" />
+                      <rect x="-2.3" y="-13.5" width="4.6" height="6.5" rx="1.3" transform="rotate(180)" />
+                      <rect x="-2.3" y="-13.5" width="4.6" height="6.5" rx="1.3" transform="rotate(225)" />
+                      <rect x="-2.3" y="-13.5" width="4.6" height="6.5" rx="1.3" transform="rotate(270)" />
+                      <rect x="-2.3" y="-13.5" width="4.6" height="6.5" rx="1.3" transform="rotate(315)" />
+                    </g>
+                    <circle r="9" fill="url(#logoGear)" />
+                    <circle r="4.2" fill="#6d28d9" />
+                  </g>
+                </g>
               </g>
             </svg>
           </div>
@@ -109,27 +129,27 @@ function Index() {
 
           <div className="grid">
             <a className="gcard glass" href="https://querapostar.conversoo.cloud" target="_blank" rel="noreferrer">
-              <div className="ic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#c4b5fd" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="9" /><circle cx="12" cy="12" r="4" /><path d="M12 3v3M12 18v3M3 12h3M18 12h3" /></svg></div>
+              <span className="ic"><img src="/prev/querapostar.webp" alt="" loading="lazy" width="46" height="46" /></span>
               <h4>Quer Apostar?</h4><div className="desc">Apostas personalizadas entre amigos em qualquer tema</div>
               <span className="badge b-live"><span className="dot" />LIVE</span>
             </a>
             <a className="gcard glass" href="https://glam-glow-gate.lovable.app" target="_blank" rel="noreferrer">
-              <div className="ic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#c4b5fd" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2l2.2 4.5L19 7l-3.5 3.4.8 4.8L12 13l-4.3 2.2.8-4.8L5 7l4.8-.5z" fill="rgba(196,181,253,.14)" /><path d="M12 13v9" /></svg></div>
+              <span className="ic"><img src="/prev/glowly.webp" alt="" loading="lazy" width="46" height="46" /></span>
               <h4>Glowly</h4><div className="desc">Agendamento para salões e estéticas com IA</div>
               <span className="badge b-beta">BETA</span>
             </a>
             <a className="gcard glass" href="https://quintaloka.conversoo.cloud" target="_blank" rel="noreferrer">
-              <div className="ic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#c4b5fd" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><path d="M8 21h8M12 17v4M7 4h10l-1 7a4 4 0 0 1-8 0z" /><path d="M5 4h14" /><circle cx="18" cy="6" r="1.3" fill="#c4b5fd" stroke="none" /></svg></div>
+              <span className="ic"><img src="/prev/quintaloka.webp" alt="" loading="lazy" width="46" height="46" /></span>
               <h4>Quinta Loka</h4><div className="desc">Jantas com amigos: sorteio, cardápio por IA e divisão de gastos</div>
               <span className="badge b-live"><span className="dot" />LIVE</span>
             </a>
             <a className="gcard glass" href="https://catalogo.aromasamore.com.br" target="_blank" rel="noreferrer">
-              <div className="ic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#c4b5fd" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><path d="M12 3s-5 4-5 9a5 5 0 0 0 10 0c0-5-5-9-5-9z" fill="rgba(196,181,253,.14)" /><path d="M12 11c-1.5 1-1.5 3 0 4" /></svg></div>
+              <span className="ic"><img src="/prev/amorecatalogo.webp" alt="" loading="lazy" width="46" height="46" /></span>
               <h4>Amoré Catálogo</h4><div className="desc">Catálogo digital + automação de vendas</div>
               <span className="badge b-case">CASE</span>
             </a>
             <a className="gcard glass" href="https://lp-organizador-financeiro-production.up.railway.app" target="_blank" rel="noreferrer">
-              <div className="ic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#c4b5fd" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><path d="M3 3v18h18" /><rect x="7" y="12" width="3" height="5" fill="rgba(196,181,253,.16)" /><rect x="12" y="9" width="3" height="8" fill="rgba(196,181,253,.16)" /><rect x="17" y="6" width="3" height="11" fill="rgba(196,181,253,.16)" /></svg></div>
+              <span className="ic"><img src="/prev/organizador.webp" alt="" loading="lazy" width="46" height="46" /></span>
               <h4>Meu Organizador Financeiro</h4><div className="desc">Plataforma financeira personalizada para gestão de negócio</div>
               <span className="badge b-case">CASE</span>
             </a>
@@ -141,7 +161,7 @@ function Index() {
           </div>
 
           <a className="destaque" href="https://hub.aromasamore.com.br" target="_blank" rel="noreferrer" style={{ marginTop: ".7rem", borderColor: "rgba(251,146,60,.28)", background: "linear-gradient(135deg,rgba(251,146,60,.1),rgba(124,58,237,.05))" }}>
-            <div className="ic" style={{ background: "linear-gradient(135deg,#1c1917,#292524)", borderColor: "rgba(251,146,60,.22)" }}><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#fb923c" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="3" /><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2" /></svg></div>
+            <span className="ic" style={{ borderColor: "rgba(251,146,60,.28)" }}><img src="/prev/amorehub.webp" alt="" loading="lazy" width="54" height="54" /></span>
             <div className="tx"><h3 style={{ color: "var(--texto)" }}>Amoré Hub <span className="badge b-case">CASE</span></h3><p>Gestão interna de produção</p></div>
           </a>
         </div>
@@ -233,13 +253,13 @@ body { background:#070512; }
 .ring-c { animation:spin 20s linear infinite; transform-origin:75px 75px; }
 @keyframes spin { to{transform:rotate(360deg)} }
 @keyframes spinR { to{transform:rotate(-360deg)} }
-.core-glow { animation:coreGlow 3.2s ease-in-out infinite; transform-origin:75px 75px; }
-@keyframes coreGlow { 0%,100%{opacity:.85;transform:scale(1)} 50%{opacity:1;transform:scale(1.06)} }
+/* Logo 3D no centro do orbe: sombra roxa (profundidade) + brilho branco (contorno) + flutuação. */
+.logo-core { transform-box:fill-box; transform-origin:center; animation:logoFloat 4.5s ease-in-out infinite;
+  filter: drop-shadow(0 3px 4px rgba(76,29,149,.75)) drop-shadow(0 0 2.5px rgba(255,255,255,.6)); }
+@keyframes logoFloat { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-3px)} }
 .orbit-1 { animation:spin 8s linear infinite; transform-origin:75px 75px; }
 .orbit-2 { animation:spinR 12s linear infinite; transform-origin:75px 75px; }
 .orbit-3 { animation:spin 16s linear infinite; transform-origin:75px 75px; }
-.eye-scan { animation:eyeScan 4s ease-in-out infinite; }
-@keyframes eyeScan { 0%,100%{transform:translateY(-4px);opacity:.4} 50%{transform:translateY(4px);opacity:1} }
 
 .kicker { font-family:${FONT_MONO}; font-size:.66rem; color:#b9a3ff; letter-spacing:4px; text-transform:lowercase; margin-bottom:.6rem; }
 .cv-h1 { font-size:1.8rem; font-weight:800; letter-spacing:-.5px; background:linear-gradient(90deg,#fff,#d6c9ff 45%,#fbb6ce); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; margin-bottom:.5rem; }
@@ -320,9 +340,13 @@ body { background:#070512; }
    CSS 'stroke' vence o atributo stroke="" do SVG; fills decorativos ficam. */
 .grid .ic { background:linear-gradient(135deg,#3a1d6e,#4c2889); border-color:rgba(167,139,250,.3); }
 .grid .ic svg { stroke:#c4b5fd; }
-/* Landing: prévia redonda (screenshot) no lugar do ícone. */
-.linhas.landing .em { width:44px; height:44px; border-radius:50%; padding:0; overflow:hidden; background:#0d0a1e; border:1px solid rgba(180,150,255,.28); }
-.linhas.landing .em img { width:100%; height:100%; object-fit:cover; display:block; }
+/* Previews (screenshot) no estilo quadrado com cantos arredondados — landing e plataformas. */
+.linhas.landing .em { width:44px; height:44px; border-radius:12px; padding:0; overflow:hidden; background:#0d0a1e; border:1px solid rgba(180,150,255,.28); }
+.linhas.landing .em img,
+.grid .ic img,
+.destaque .ic img { width:100%; height:100%; object-fit:cover; object-position:top; display:block; }
+.grid .ic { overflow:hidden; background:#0d0a1e; border-color:rgba(167,139,250,.3); }
+.destaque .ic { overflow:hidden; background:#0d0a1e; }
 .agentes .av { background:rgba(16,185,129,.14); border:1px solid rgba(52,211,153,.34); }
 .agentes .av svg { stroke:#6ee7b7; }
 .linha .txt { flex:1; min-width:0; }

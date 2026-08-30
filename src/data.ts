@@ -29,6 +29,13 @@ export const categorias: Categoria[] = [
     imagem: "/cat/landing-pages.webp",
     itens: [
       {
+        nome: "Conversoo — Site Institucional",
+        subtitulo: "A empresa por trás de tudo isso",
+        href: "https://lp.conversoo.cloud/",
+        prev: "/prev/conversoo.webp",
+        badge: "CONVERSOO",
+      },
+      {
         nome: "CB Advocacia",
         subtitulo: "Landing page e copy para escritório de advocacia bancária",
         href: "https://cb-advocacia.vercel.app/",
@@ -85,13 +92,6 @@ export const categorias: Categoria[] = [
     subtitulo: "Sistemas e produtos sob medida",
     imagem: "/cat/plataformas.webp",
     itens: [
-      {
-        nome: "Conversoo — Site Institucional",
-        subtitulo: "A empresa por trás de tudo isso",
-        href: "https://lp.conversoo.cloud/",
-        prev: "/prev/conversoo.webp",
-        badge: "CONVERSOO",
-      },
       {
         nome: "A Fonte",
         subtitulo: "Estudo bíblico guiado via WhatsApp e web",

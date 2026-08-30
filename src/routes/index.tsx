@@ -2,6 +2,21 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { categorias, type Item } from "../data";
 
+// >>> Trocar aqui o número real (DDI + DDD + número, só dígitos) e o Instagram.
+const WPP_NUMERO = "5551992604341";
+const WPP_MSG = "Olá! Vim pela página da Conversoo e quero saber mais.";
+const INSTAGRAM = "https://instagram.com/conversoo.automacoes";
+
+const WPP_URL = `https://wa.me/${WPP_NUMERO}?text=${encodeURIComponent(WPP_MSG)}`;
+
+function IconeWpp({ className }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <path d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.16-.17.2-.35.22-.64.08-.3-.15-1.26-.46-2.39-1.48-.88-.79-1.48-1.76-1.65-2.06-.18-.3-.02-.46.13-.6.13-.14.3-.35.44-.52.15-.18.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.61-.92-2.21-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.8.37-.27.3-1.03 1.02-1.03 2.48 0 1.46 1.06 2.87 1.21 3.07.15.2 2.1 3.2 5.08 4.49.71.3 1.26.49 1.69.62.71.23 1.36.2 1.87.12.57-.09 1.76-.72 2-1.41.25-.7.25-1.29.18-1.42-.08-.12-.27-.2-.57-.34M12.05 21.8a9.87 9.87 0 0 1-5.03-1.38l-.36-.22-3.74.99 1-3.65-.24-.38a9.86 9.86 0 0 1-1.51-5.26c0-5.45 4.44-9.88 9.89-9.88a9.82 9.82 0 0 1 6.99 2.9 9.83 9.83 0 0 1 2.89 6.99c0 5.45-4.44 9.89-9.89 9.89M20.52 3.45A11.82 11.82 0 0 0 12.05 0C5.46 0 .1 5.36.1 11.95c0 2.1.55 4.14 1.6 5.94L0 24l6.34-1.65a11.88 11.88 0 0 0 5.68 1.45h.01c6.58 0 11.94-5.36 11.94-11.95a11.86 11.86 0 0 0-3.45-8.4" />
+    </svg>
+  );
+}
+
 export const Route = createFileRoute("/")({
   component: Novo,
 });
@@ -44,6 +59,10 @@ function Novo() {
         <header className="nv-header">
           <h1 className="nv-brand">Conversoo</h1>
           <p className="nv-tagline">Tudo que a gente construiu, em um lugar só.</p>
+          <a className="nv-cta" href={WPP_URL} target="_blank" rel="noopener noreferrer">
+            <IconeWpp className="nv-cta-ico" />
+            Falar com a gente
+          </a>
         </header>
 
         {categorias.map((cat) => {
@@ -83,8 +102,34 @@ function Novo() {
           );
         })}
 
-        <footer className="nv-footer">© 2026 Conversoo</footer>
+        <footer className="nv-footer">
+          <div className="nv-footer-links">
+            <a href={WPP_URL} target="_blank" rel="noopener noreferrer">
+              <IconeWpp className="nv-footer-ico" />
+              WhatsApp
+            </a>
+            <a href={INSTAGRAM} target="_blank" rel="noopener noreferrer">
+              <svg className="nv-footer-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9" aria-hidden="true">
+                <rect x="2.5" y="2.5" width="19" height="19" rx="5.5" />
+                <circle cx="12" cy="12" r="4.2" />
+                <circle cx="17.4" cy="6.6" r="1.1" fill="currentColor" stroke="none" />
+              </svg>
+              Instagram
+            </a>
+          </div>
+          <p className="nv-copy">© 2026 Conversoo</p>
+        </footer>
       </main>
+
+      <a
+        className="nv-fab"
+        href={WPP_URL}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Falar no WhatsApp"
+      >
+        <IconeWpp className="nv-fab-ico" />
+      </a>
     </>
   );
 }
@@ -93,7 +138,8 @@ const css = `
 html, body { background:#070512; overflow-x:hidden; }
 .nv-main {
   position:relative; z-index:1; width:100%; max-width:480px; margin:0 auto;
-  padding:2.4rem 1.1rem 3rem;
+  /* folga no pé pro FAB não cobrir o rodapé no fim do scroll */
+  padding:2.4rem 1.1rem 6rem;
   font-family:'Outfit', system-ui, sans-serif; color:#f6f3ff;
   min-height:100vh; background:#070512;
 }
@@ -105,6 +151,21 @@ html, body { background:#070512; overflow-x:hidden; }
   -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent;
 }
 .nv-tagline { margin:.45rem 0 0; font-size:.9rem; font-weight:300; color:#c8bee6; }
+
+/* CTA principal: pílula em gradiente roxo, mesma família dos cards */
+.nv-cta {
+  display:inline-flex; align-items:center; justify-content:center; gap:8px;
+  margin-top:1.05rem; padding:.62rem 1.25rem; border-radius:999px;
+  font-size:.88rem; font-weight:600; color:#fff; text-decoration:none;
+  background:linear-gradient(100deg,#7c5ac8,#a78bfa 55%,#c084fc);
+  border:1px solid rgba(196,181,253,.45);
+  box-shadow:0 6px 22px -10px rgba(124,90,200,.9);
+  transition:transform .2s ease, box-shadow .2s ease, filter .2s ease;
+  -webkit-tap-highlight-color:transparent;
+}
+.nv-cta:hover { filter:brightness(1.07); box-shadow:0 10px 26px -10px rgba(167,139,250,.95); }
+.nv-cta:active { transform:scale(.98); }
+.nv-cta-ico { width:17px; height:17px; flex-shrink:0; }
 
 /* Card de categoria (vidro) */
 .nv-card {
@@ -195,13 +256,44 @@ html, body { background:#070512; overflow-x:hidden; }
 }
 .nv-badge.beta { background:rgba(245,158,11,.24); color:#ffd97a; border-color:rgba(245,158,11,.55); }
 
-.nv-footer {
-  margin-top:1.6rem; text-align:center;
+.nv-footer { margin-top:1.6rem; text-align:center; }
+.nv-footer-links { display:flex; justify-content:center; gap:.55rem; }
+.nv-footer-links a {
+  display:inline-flex; align-items:center; gap:7px; text-decoration:none;
+  padding:.45rem .95rem; border-radius:999px;
+  font-size:.78rem; font-weight:500; color:#c8bee6;
+  border:1px solid rgba(180,150,255,0.16); background:rgba(255,255,255,0.02);
+  transition:background .2s ease, border-color .2s ease, color .2s ease;
+  -webkit-tap-highlight-color:transparent;
+}
+.nv-footer-links a:hover {
+  background:rgba(124,90,200,0.12); border-color:rgba(180,150,255,0.34); color:#f6f3ff;
+}
+.nv-footer-ico { width:15px; height:15px; flex-shrink:0; color:#c4b5fd; }
+.nv-copy {
+  margin:1rem 0 0;
   font-family:'JetBrains Mono', ui-monospace, monospace;
   font-size:.62rem; letter-spacing:1.2px; color:#5e4f86;
 }
 
+/* Botão flutuante de WhatsApp */
+.nv-fab {
+  position:fixed; z-index:20;
+  right:max(1rem, env(safe-area-inset-right));
+  bottom:calc(1rem + env(safe-area-inset-bottom));
+  display:flex; align-items:center; justify-content:center;
+  width:54px; height:54px; border-radius:50%;
+  background:#25D366; color:#06301a;
+  border:1px solid rgba(196,181,253,.35);
+  box-shadow:0 10px 28px -10px rgba(0,0,0,.85), 0 0 0 6px rgba(124,90,200,.14);
+  transition:transform .2s ease, box-shadow .2s ease;
+  -webkit-tap-highlight-color:transparent;
+}
+.nv-fab:hover { transform:scale(1.06); box-shadow:0 12px 32px -10px rgba(0,0,0,.9), 0 0 0 9px rgba(124,90,200,.18); }
+.nv-fab:active { transform:scale(.96); }
+.nv-fab-ico { width:27px; height:27px; }
+
 @media (prefers-reduced-motion:reduce){
-  .nv-panel, .nv-chevron { transition:none; }
+  .nv-panel, .nv-chevron, .nv-cta, .nv-fab { transition:none; }
 }
 `;

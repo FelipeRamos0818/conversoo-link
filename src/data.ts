@@ -25,7 +25,7 @@ export const categorias: Categoria[] = [
   {
     id: "landing-pages",
     titulo: "Landing Pages",
-    subtitulo: "Páginas que apresentam o negócio e levam pro WhatsApp",
+    subtitulo: "Páginas que apresentam o negócio e levam pro WhatsApp ou qualquer outro destino",
     imagem: "/cat/landing-pages.webp",
     itens: [
       {

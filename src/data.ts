@@ -57,6 +57,20 @@ export const categorias: Categoria[] = [
         badge: "CASE",
       },
       {
+        nome: "Michele Dreyer",
+        subtitulo: "Penteadista e educadora — atendimentos, cursos e formações",
+        href: "https://link-michele.vercel.app/",
+        prev: "/prev/micheledreyer.webp",
+        badge: "CASE",
+      },
+      {
+        nome: "Marcaux Advocacia",
+        subtitulo: "Advocacia previdenciária — aposentadoria, revisão e benefícios",
+        href: "https://demo-adv-pied.vercel.app/",
+        prev: "/prev/marcaux.webp",
+        badge: "CASE",
+      },
+      {
         nome: "Dra. Adrine Betat",
         subtitulo: "Médica — atendimento individualizado e prevenção",
         href: "https://www.draadrinebetat.com.br/",
